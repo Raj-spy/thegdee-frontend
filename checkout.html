@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #000000;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .checkout-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      /* background-color: #000000; */
+    }
+
+    .checkout-form, .cart-details {
+      background-color: #000000;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .checkout-form input, .checkout-form select {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #1e1e1e; /* Darker grey, softer than pure black */
+  border: 1px solid #444;     /* Subtle border */
+  border-radius: 5px;
+  color: #f1f1f1;             /* Light text for contrast */
+}
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 12px;
+      gap: 20px;
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .cart-details h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .cart-info {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .total-price {
+      font-weight: bold;
+      color: #00ff99;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .payment-method {
+  display: flex;
+  justify-content: flex-start; /* 👈 aligns it to the left */
+  margin: 40px 0;
+  width: 100%;
+}
+
+.payment-method div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #1e1e1e;
+  padding: 25px 30px;
+  border-radius: 12px;
+  border: 1px solid #444;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+  margin-left: 20px; /* 👈 gives space from the left edge */
+}
+
+.payment-method input[type="radio"] {
+  display: none;
+}
+
+.payment-method label {
+  display: block;
+  background-color: #2a2a2a;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  color: #f1f1f1;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.payment-method input[type="radio"]:checked + label {
+  border-color: #00e68a;
+  background-color: #333;
+  color: #00e68a;
+}
+
+.payment-method label:hover {
+  background-color: #333;
+}
+
+/* 🎯 Responsive Adjustments */
+@media (max-width: 798px) {
+  .payment-method div {
+    max-width: 60%;
+    padding: 20px;
+  }
+
+  .payment-method label {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-method {
+    padding: 0 10px;
+  }
+
+  .payment-method label {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+.submit-btn {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 15px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #00e68a;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 25px;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 230, 138, 0.2);
+}
+
+.submit-btn:hover {
+  background-color: transparent;
+  color: #00e68a;
+  border: 2px solid #00e68a;
+  box-shadow: 0 0 10px #00e68a;
+}
+
+.loader {
+  display: none;
+  text-align: center;
+  color: #00e68a;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Optional animation for loader */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+
+    @media (max-width: 600px) {
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cart-item img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    /* Styling for the marquee container */
+    .marquee-container {
+      width: 100%;
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+      padding: 10px 0;
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: center;
+      overflow: hidden; /* Hide anything outside the container */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
+
+    /* Styling for the marquee text to make it scroll smoothly */
+    .marquee {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 15s linear infinite; /* Make the scroll smooth and continuous */
+    }
+
+    /* Keyframes for smooth left-to-right scrolling */
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%); /* Start off the screen to the right */
+      }
+      100% {
+        transform: translateX(-100%); /* Move completely off the screen to the left */
+      }
+    }
+  </style>
+</head>
+   <!-- Marquee Section -->
+   <div class="marquee-container">
+    <div class="marquee">
+      📢 COD orders include ₹100 delivery charge. Online payment has free delivery.
+    </div>
+  </div>
+
+  
+  <h1>Checkout</h1>
+
+  <div class="checkout-container">
+    <!-- User Details Form -->
+    <div class="checkout-form">
+      <h3>Enter Your Details</h3>
+      <input type="text" id="user-name" placeholder="Your Name" required />
+      <input type="text" id="user-address" placeholder="Your Address" required />
+      <input type="tel" id="user-phone" placeholder="Your Phone Number" required />
+      
+      <div class="payment-method">
+        <div>
+          <input type="radio" id="online-payment" name="payment" value="online" checked />
+          <label for="online-payment">Online Payment</label>
+
+          <input type="radio" id="cod" name="payment" value="cod" />
+          <label for="cod">Cash On Delivery (COD)</label>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submit-btn" onclick="submitCheckout()">Proceed to Payment</button>
+      <div class="loader" id="loader">Processing your order...</div>
+    </div>
+
+    <!-- Cart Details -->
+    <div class="cart-details">
+      <h3>Your Cart</h3>
+      <div id="cart-items"></div>
+      <div class="total-price" id="final-total"></div>
+    </div>
+  </div>
+
+    <script>
+ const cartContainer = document.getElementById("cart-items");
+const finalTotalElement = document.getElementById("final-total");
+const loader = document.getElementById("loader");
+const submitBtn = document.getElementById("submit-btn");
+const paymentRadios = document.querySelectorAll('input[name="payment"]');
+
+let cartItems = [];
+try {
+  cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+} catch (error) {
+  console.error("Invalid cart JSON:", error);
+  localStorage.removeItem("cart");
+}
+
+let baseTotal = 0;
+let deliveryCharge = 0;
+let finalTotal = 0;
+
+function updateCartDisplay() {
+  cartContainer.innerHTML = "";
+  baseTotal = 0;
+
+  if (!cartItems.length) {
+    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+    finalTotalElement.innerHTML = "";
+    return;
+  }
+
+  cartItems.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    baseTotal += itemTotal;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.title}" />
+      <div>
+        <h4>${item.title}</h4>
+        <p>Size: ${item.size}</p>
+        <p>Quantity: ${item.quantity}</p>
+        <p>Price: ₹${item.price} x ${item.quantity} = ₹${itemTotal}</p>
+      </div>
+    `;
+    cartContainer.appendChild(div);
+  });
+
+  updateTotal();
+}
+
+function updateTotal() {
+  const selectedPayment = document.querySelector('input[name="payment"]:checked');
+  deliveryCharge = (selectedPayment?.value === "cod") ? 100 : 0;
+  finalTotal = baseTotal + deliveryCharge;
+
+  finalTotalElement.innerHTML = `
+    <p>Subtotal: ₹${baseTotal}</p>
+    <p>Delivery: ₹${deliveryCharge}</p>
+    <strong>Total Amount: ₹${finalTotal}</strong>
+  `;
+}
+
+paymentRadios.forEach(radio => {
+  radio.addEventListener("change", updateTotal);
+});
+
+function validatePhoneNumber(phone) {
+  return /^[6-9]\d{9}$/.test(phone);
+}
+
+async function submitCheckout() {
+  const userName = document.getElementById("user-name").value.trim();
+  const userAddress = document.getElementById("user-address").value.trim();
+  const userPhone = document.getElementById("user-phone").value.trim();
+  const selectedPayment = document.querySelector('input[name="payment"]:checked');
+
+  if (!userName || !userAddress || !userPhone) {
+    alert("Please fill in all the details.");
+    return;
+  }
+
+  if (!validatePhoneNumber(userPhone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return;
+  }
+
+  if (!cartItems.length) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  loader.style.display = "block";
+  submitBtn.disabled = true;
+
+  const orderData = {
+    name: userName,
+    address: userAddress,
+    phoneNumber: userPhone,
+    paymentMethod: selectedPayment.value,
+    orderstatus: "pending",
+    totalAmount: finalTotal,
+    products: cartItems.map(item => ({
+      title: item.title,
+      price: item.price,
+      image: item.image,
+      quantity: item.quantity,
+      size: item.size,
+    }))
+  };
+
+  localStorage.setItem("orderDetails", JSON.stringify(orderData));
+
+  if (selectedPayment.value === "online") {
+    // Razorpay payment integration
+    const options = {
+      key: "rzp_test_FmWMEGnclUdJ7q", // Your Razorpay Key ID
+      amount: finalTotal * 100, // Amount in paise (multiply by 100)
+      currency: "INR",
+      name: "Thegdeeclothing",
+      description: "Order Payment",
+      image: "https://yourwebsite.com/logo.png", // Your company logo URL
+      handler: async function (paymentResponse) {
+        console.log("Payment successful:", paymentResponse);
+
+        const orderData = {
+          name: userName,
+          address: userAddress,
+          phoneNumber: userPhone,
+          paymentMethod: selectedPayment.value,
+          orderstatus: "pending",
+          totalAmount: finalTotal,
+          razorpayPaymentId: paymentResponse.razorpay_payment_id, // Use paymentResponse here
+          products: cartItems.map(item => ({
+            title: item.title,
+            price: item.price,
+            image: item.image,
+            quantity: item.quantity,
+            size: item.size,
+          }))
+        };
+
+        try {
+          const res = await fetch("http://localhost:1337/api/orders", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: orderData })
+          });
+          const result = await res.json();
+          if (res.ok) {
+            alert("✅ Order placed successfully!");
+            localStorage.removeItem("cart");
+            window.location.href = "confirmation.html"; // Redirect to confirmation page
+          } else {
+            console.error("Error sending order to Strapi:", result.error);
+            alert("❌ Failed to place order.");
+          }
+        } catch (err) {
+          console.error("Request failed:", err);
+          alert("An error occurred.");
+        }
+      },
+      prefill: {
+        name: userName,
+        email: "user@example.com", // Optionally, get the user's email
+        contact: userPhone
+      },
+      theme: {
+        color: "#F37254" // Customize the theme color of the payment window
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } else {
+    // COD (Cash on Delivery) handling
+    try {
+      const response = await fetch("http://localhost:1337/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: orderData })
+      });
+
+      const result = await response.json();
+      loader.style.display = "none";
+      submitBtn.disabled = false;
+
+      if (response.ok) {
+        localStorage.removeItem("cart");
+        alert("✅ Order placed successfully!");
+        window.location.href = "confirmation.html";
+      } else {
+        console.error("Order error:", result);
+        alert("❌ Failed to place order.");
+      }
+    } catch (err) {
+      console.error("Request failed:", err);
+      loader.style.display = "none";
+      submitBtn.disabled = false;
+      alert("An error occurred.");
+    }
+  }
+}
+
+
+
+// Initial load
+updateCartDisplay();
+
+
+
+
+</script>
+</body>
+</html>

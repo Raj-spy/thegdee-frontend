@@ -1,0 +1,57 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bungee+Spice&family=Exo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Reddit+Sans+Condensed:wght@200..900&family=SUSE:wght@100..800&family=Special+Gothic+Expanded+One&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.video-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: white;
+}
+
+.logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.categories a {
+  color: rgb(203, 203, 203);
+  text-decoration: none;
+  font-family: 'Special Gothic Expanded One', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.categories a:hover {
+  color: #000000;
+}

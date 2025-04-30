@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>thegdee.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+   <!-- 🔁 Background Video -->
+  <video autoplay muted loop class="video-bg">
+    <source src="media/bg-2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- 🌟 Overlay Content -->
+  <div class="overlay">
+    <img src="media/thegdee logo without bg.png" alt="Logo" class="logo">
+
+    <div class="categories">
+      <a href="products.html">All Collection</a>
+      <a href="collection.html">Premium Drop</a>
+      <a href="drop-zone.html">Drop Zone</a>
+      <a href="core-fits.html">Core Fits</a>
+    </div>
+  </div>
+
+  
+
+
+  <script>
+    async function fetchProducts() {
+      try {
+        const res = await fetch('http://localhost:1337/api/products');
+        const data = await res.json();
+  
+        const products = data.data;
+        const container = document.getElementById('product-container');
+  
+        products.forEach(product => {
+          const item = product; // Directly using product
+  
+          const div = document.createElement('div');
+          div.className = 'product';
+  
+          div.innerHTML = `
+            <h3>${item.Title}</h3>
+            <p><strong>Price:</strong> ₹${item.Price}</p>
+            <p><strong>Size:</strong> ${item.Sizes}</p>
+            <p><strong>Description:</strong> ${item.Description}</p>
+          `;
+  
+          container.appendChild(div);
+        });
+  
+      } catch (err) {
+        console.error('Error fetching products:', err);
+      }
+    }
+  
+    fetchProducts(); 
+  </script>
+  
+  
+
+</body>
+</html>

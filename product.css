@@ -1,0 +1,746 @@
+  /* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bungee+Spice&family=Exo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Special+Gothic+Expanded+One&display=swap');
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #000000;
+  color: #f0f0f0;
+  padding: 1rem;
+  padding-top: 0;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+  flex: 1;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-wrapper {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.logo-wrapper:hover {
+  transform: scale(1.05);
+}
+
+.logo {
+  height: 55px;
+  display: block;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-icon,
+.shopping-icon {
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  transition: color 0.3s;
+}
+
+.search-icon:hover,
+.shopping-icon:hover {
+  color: #777;
+}
+
+/* Hamburger (mobile only) */
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  flex-wrap: nowrap; /* Prevent line break */
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  white-space: nowrap;
+  padding: 0.4rem 0;
+  transition: color 0.3s ease;
+}
+
+/* Underline animation */
+.nav-links li a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: -2px;
+  background-color: #00e68a;
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
+}
+
+.nav-links li a:hover {
+  color: #00e68a;
+}
+
+/* Login Icon */
+.login-icon {
+  font-size: 20px;
+  color: white;
+}
+
+/* Hover effect for all icons */
+.nav-right i:hover {
+  color: #252525;
+}
+
+
+/* Sale Highlight (optional) */
+.sale-link {
+  color: #ff6f61;
+  font-weight: bold;
+}
+
+/* Mobile Menu (default hidden) */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: #000000;
+    padding: 1rem 0;
+    display: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-links {
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+}
+
+
+/* Main image section */
+.main-image-container {
+  padding-top: 90px; /* safer for fixed navbar */
+  width: 100%;
+  text-align: center;
+}
+
+
+.main-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+
+/* .main-image:hover {
+  transform: scale(1.02);
+} */
+
+@media (max-width: 600px) {
+  .main-image {
+    max-height: 70vh; /* Even smaller on mobile if you want */
+    /* margin-top: 10px; */
+  }
+}
+
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-behavior: smooth;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+.horizontal-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.product-card {
+  flex: 0 0 auto;
+  min-width: 300px; /* Increased the min-width */
+  max-width: 300px; /* Increased the max-width */
+  background-color: #000; /* Black background */
+  border: 1px solid #333; /* Optional: subtle dark border */
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px; /* Increased padding for a more spacious look */
+  color: #fff; /* White text */
+  box-shadow: 0 4px 12px rgba(105, 255, 180, 0.882), 0 1px 6px rgba(255, 20, 147, 0.2); /* Larger shadow for more impact */
+}
+
+.product-card img {
+  width: 100%;
+  height: 250px; /* Increased image height */
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #444; /* Optional: for clean image edges */
+}
+
+
+.product-card h3,
+.product-card p {
+  margin: 10px 0;
+  color: #fff;
+}
+
+h1 {
+  font-family: 'Anton', sans-serif; /* Default font */
+  font-size: 4vw; /* Font size relative to viewport width */
+  font-weight: bold;
+  color: #ff7700; /* Firey color */
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+      font-family: 'Bungee Spice', sans-serif; /* For smaller screens */
+      font-size: 10vw; /* Adjust font size for smaller screens */
+      margin-top: 20px;
+      margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+      font-family: 'Special Gothic Expanded One', sans-serif; /* For very small screens */
+      font-size: 9vw; /* Further adjust font size for very small screens */
+      margin-top: 15px;
+      margin-bottom: 15px;
+  }
+}
+
+
+/* Hover effect */
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(255, 0, 153, 0.3);
+}
+
+ 
+.product:hover img {
+  transform: scale(1.03);
+}
+
+/* Sale badge */
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  color: black;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Product title */
+ 
+
+/* Price wrapper */
+.price-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Old price */
+.old-price {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 0.85rem;
+}
+
+/* New price */
+.new-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Media Queries */
+
+/* Tablets */
+@media (max-width: 768px) {
+  #product-container {
+    gap: 16px;
+  }
+
+  .product {
+    width: 200px;
+  }
+
+  .product img {
+    height: 180px;
+  }
+
+  .product h3 {
+    font-size: 0.9rem;
+  }
+
+  .new-price {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #product-container {
+    gap: 12px;
+    padding: 5px;
+  }
+
+  .product {
+    width: 150px;
+  }
+
+  .product img {
+    height: 150px;
+  }
+
+  .product h3 {
+    font-size: 0.85rem;
+  }
+
+  .new-price {
+    font-size: 0.9rem;
+  }
+}
+
+ 
+  /* Section heading */
+.latest-heading {
+  color: #fff;
+  font-size: 2.8rem;
+  text-align: center;
+  margin: 3rem 0;
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 1px;
+}
+
+ /* Wrap for products */
+.latest-product-wrap {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+/* Individual product card */
+.latest-card {
+  background-color: #111; /* Dark background for sleek feel */
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(255, 0, 153, 0.1); /* Lighter shadow for a more subtle effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #333; /* Subtle border to separate cards */
+}
+
+/* Hover effect for card */
+.latest-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgb(96, 96, 96); /* More prominent shadow */
+}
+
+/* Product image section */
+.latest-img {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  border-bottom: 2px solid #444; /* Subtle border under image for cleaner separation */
+}
+
+.latest-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.latest-img:hover img {
+  transform: scale(1.05); /* Smooth zoom effect */
+}
+
+/* Label (more refined) */
+.label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #820aea94; /* Vibrant but not overpowering */
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+/* Product content section */
+.latest-content {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.latest-content h3 {
+  font-size: 1.6rem; /* Slightly larger title for better readability */
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-family: 'Orbitron', sans-serif; /* Bold and modern font */
+  font-weight: 700;
+}
+
+.latest-content p {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif; /* Clean, modern font */
+}
+
+/* Shop button */
+.shop-btn {
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  padding: 12px 30px; /* Increased padding for better button feel */
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.shop-btn:hover {
+  background-color:#252525 ; 
+  transform: scale(1.05); /* Slight scaling effect for hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .latest-card {
+    max-width: 100%;
+  }
+
+  .latest-content h3 {
+    font-size: 1.4rem;
+  }
+
+  .latest-content p {
+    font-size: 0.9rem;
+  }
+
+  .shop-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Responsive for Tablets and Small Devices */
+@media (max-width: 768px) {
+  .latest-product-wrap {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .latest-card {
+    max-width: 100%;
+  }
+
+  .latest-img {
+    height: 250px;
+  }
+}
+
+/* Responsive for Laptops and Medium Screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .latest-product-wrap {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .latest-card {
+    max-width: 48%;
+  }
+
+  .latest-img {
+    height: 400px;
+  }
+}
+
+/* ✅ 2-Column Layout for Large Screens */
+@media (min-width: 1025px) {
+  .latest-product-wrap {
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .latest-card {
+    flex: 1 1 50%;
+    max-width: 50%;
+  }
+
+  .latest-img {
+    height: 450px;
+  }
+}
+
+/* Optional: Larger image on ultra-wide screen */
+@media (min-width: 1440px) {
+  .latest-img {
+    height: 500px;
+  }
+}
+
+
+
+
+/* scroll */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
+  margin: 3rem 0; /* 👈 spacing above and below */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+
+
+
+
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: scroll-left 40s linear infinite;
+}
+
+.marquee span {
+  white-space: nowrap;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: white;
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 2px;
+  margin-right: 4rem; /* gap between repeats */
+}
+
+/* Animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .marquee-container {
+    margin: 2rem 0;
+    padding: 0.8rem 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .marquee-container {
+    padding: 1rem 0;
+    margin: 1rem 0;
+  }
+
+  .marquee span {
+    font-size: 1.5rem;
+    margin-right: 2rem;
+    letter-spacing: 1px;
+  }
+}
+
+ 
+/* footer */
+/* Footer Styling */
+.footer {
+  background-color: #000; /* Pure black background */
+  color: #fff;
+  padding: 30px 20px;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
+}
+
+/* Footer Content */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Footer Logo */
+.footer-logo img {
+  width: 120px;
+  margin-bottom: 5px;
+}
+
+.footer-logo p {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.5px;
+  margin: 5px 0;
+}
+
+/* Footer Links */
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+}
+
+.footer-links li {
+  font-size: 0.9rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color:  #00e68a; /* Soft pink color on hover */
+}
+
+/* Social Media Icons */
+.footer-social {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icon {
+  font-size: 1.3rem;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+  color:  #00e68a;
+  transform: scale(1.2); /* Slight zoom effect on hover */
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  font-size: 0.8rem;
+  color: #ddd;
+  margin-top: 20px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-links {
+    margin-top: 10px;
+    gap: 15px;
+  }
+
+  .footer-social {
+    margin-top: 10px;
+  }
+}

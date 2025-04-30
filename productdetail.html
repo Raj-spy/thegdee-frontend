@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <link rel="stylesheet" href="productdetail.css" />
+  <link rel="stylesheet" href="product.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  
+    <div class="nav-center">
+      <div class="logo-wrapper">
+        <img src="media/thegdee logo without bg.png" alt="TheGdee Logo" class="logo" />
+      </div>
+    </div>
+  
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="new.html">New Drops</a></li>
+        <li><a href="collections.html">Collections</a></li>
+        <li><a href="shop.html">Shop All</a></li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="sale.html" class="sale-link">Sale</a></li>
+      </ul>
+      <i class="fas fa-search search-icon"></i>
+      <a href="cart.html">
+        <i class="fas fa-shopping-bag shopping-icon"></i>
+      </a>
+
+      <!-- Login Icon -->
+    <a href="loginsign.html">
+      <i class="fas fa-user login-icon"></i>
+    </a>
+    </div>
+  </nav>
+
+  <!-- Product Section -->
+  <div class="product-container">
+    <div class="product-images-container" id="product-images">Loading Images...</div>
+    <div class="product-details-container" id="product-details">Loading Details...</div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="media/thegdee logo without bg.png" alt="Your Logo">
+        <p>Shop the Best, For the Best!</p>
+      </div>
+      <div class="footer-links">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Thegdeeclothing. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script> 
+
+   // Hamburger menu toggle
+   const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("navLinks");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+  async function fetchProductDetails() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get("slug");
+  
+      if (!slug) throw new Error("Product slug not found in URL.");
+  
+      const res = await fetch(`http://localhost:1337/api/products?populate=*&filters[Slug][$eq]=${slug}`);
+      const json = await res.json();
+      const product = json.data?.[0]; // Check that the product exists
+  
+      if (!product) {
+        document.getElementById("product-details").innerHTML = "<p>❌ Product not found.</p>";
+        return;
+      }
+  
+      const { Title, Price, Description, Image, id } = product;
+      const images = Image || []; // Ensure it's an array, even if it's a single image
+  
+      // Render Images
+      let imageHTML = `
+        <div class="product-images">
+          ${images.map((img, i) => `
+            <img src="http://localhost:1337${img.formats?.medium?.url || img.url}" class="slider-image" />
+          `).join("")}
+        </div>
+      `;
+      document.getElementById("product-images").innerHTML = imageHTML;
+  
+      // Render Details
+      document.getElementById("product-details").innerHTML = `
+        <h2>${Title}</h2>
+        <p><strong>Price:</strong> ₹${Price}</p>
+        <p>${Description}</p>
+        <div class="quantity-container">
+          <button class="quantity-decrease">-</button>
+          <span id="quantity">1</span>
+          <button class="quantity-increase">+</button>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+        <div class="button-container">
+          <button class="button">Medium</button>
+          <button class="button">Large</button>
+          <button class="button">Extra large</button>
+        </div>
+      `;
+  
+      // Quantity Logic
+      let quantity = 1;
+      const quantityDisplay = document.getElementById('quantity');
+      document.querySelector('.quantity-decrease').onclick = () => {
+        if (quantity > 1) quantityDisplay.textContent = --quantity;
+      };
+      document.querySelector('.quantity-increase').onclick = () => {
+        quantityDisplay.textContent = ++quantity;
+      };
+  
+      // Size Button Active Logic
+      document.querySelectorAll('.button-container .button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.button-container .button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+  
+      // Add to Cart Logic
+      document.querySelector('.add-to-cart').addEventListener('click', () => {
+        const selectedSize = document.querySelector('.button-container .active')?.textContent || "Medium";
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+        const existingItemIndex = cart.findIndex(item => item.id === id && item.size === selectedSize);
+  
+        if (existingItemIndex !== -1) {
+          cart[existingItemIndex].quantity += quantity;
+        } else {
+          cart.push({
+  id,
+  title: Title,
+  price: Price,
+  quantity,
+  size: selectedSize,
+  image: `http://localhost:1337${images[0]?.formats?.medium?.url || images[0]?.url}`
+});
+        }
+  
+        localStorage.setItem('cart', JSON.stringify(cart));
+        window.location.href = "cart.html"; // Redirect to cart
+      });
+  
+      // Touch Scroll Logic for Image Slider
+      const sliderContainer = document.querySelector('.product-images');
+      let isDragging = false;
+      let startX;
+      let scrollLeft;
+  
+      sliderContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - sliderContainer.offsetLeft;
+        scrollLeft = sliderContainer.scrollLeft;
+      });
+  
+      sliderContainer.addEventListener('mouseleave', () => {
+        isDragging = false;
+      });
+  
+      sliderContainer.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+  
+      sliderContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - sliderContainer.offsetLeft;
+        const walk = (x - startX) * 2; // Adjust scroll speed
+        sliderContainer.scrollLeft = scrollLeft - walk;
+      });
+  
+      // Mobile Touch Logic
+      sliderContainer.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - sliderContainer.offsetLeft;
+        scrollLeft = sliderContainer.scrollLeft;
+      });
+  
+      sliderContainer.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+  
+      sliderContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const x = e.touches[0].pageX - sliderContainer.offsetLeft;
+        const walk = (x - startX) * 2; // Adjust scroll speed
+        sliderContainer.scrollLeft = scrollLeft - walk;
+      });
+  
+    } catch (error) {
+      document.getElementById("product-details").innerHTML = `<p>Error loading product: ${error.message}</p>`;
+    }
+  }
+  
+  window.onload = fetchProductDetails;
+  
+  </script>
+
+</body>
+</html>
