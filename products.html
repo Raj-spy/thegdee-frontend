@@ -174,9 +174,13 @@
       products.forEach((product) => {
         const { Title, Price, Slug, Image } = product;
 
+        // Handling Image URL correctly
         const imageUrl = Image && Image.length > 0
           ? `https://panel.thegdee.com${Image[0].formats?.medium?.url || Image[0].url}`
           : "https://via.placeholder.com/300x300?text=No+Image";
+
+        // Handling Price
+        const productPrice = Price ? `₹${Price}` : "Price Not Available";
 
         const productHTML = `
         <div class="product-card">
@@ -184,7 +188,7 @@
             <img src="${imageUrl}" alt="${Title}" />
           </a>
           <h3>${Title}</h3>
-          <p>₹${Price}</p>
+          <p>${productPrice}</p>
         </div>
       `;
 
@@ -198,6 +202,7 @@
     console.error("❌ Error fetching products:", error);
   }
 }
+
   
     
     // Initialize AOS (Animate On Scroll)
