@@ -144,14 +144,6 @@
 
 
 <script>
-  // Hamburger menu toggle
-  const hamburger = document.getElementById("hamburger");
-  const navLinks = document.getElementById("navLinks");
-
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
-
   async function fetchProducts() {
   try {
     // Fetch only 10 products from the Strapi API (update URL)
@@ -174,20 +166,23 @@
       products.forEach((product) => {
         const { Title, Price, Slug, Image } = product;
 
-        const imageUrl = Image && Image.length > 0
-          ? `https://panel.thegdee.com${Image[0].formats?.medium?.url || Image[0].url}`
-          : "https://via.placeholder.com/300x300?text=No+Image";
+        // Ensure image URL is correctly formed
+        const imageUrl = Image && Image.data && Image.data.length > 0
+          ? `https://panel.thegdee.com${Image.data[0].formats?.medium?.url || Image.data[0].url}` // Ensure it's using the correct property
+          : "https://via.placeholder.com/300x300?text=No+Image";  // Fallback if no image
 
+        // Construct product HTML
         const productHTML = `
-        <div class="product-card">
-          <a href="productdetail.html?slug=${Slug}">
-            <img src="${imageUrl}" alt="${Title}" />
-          </a>
-          <h3>${Title}</h3>
-          <p>₹${Price}</p>
-        </div>
-      `;
+          <div class="product-card">
+            <a href="productdetail.html?slug=${Slug}">
+              <img src="${imageUrl}" alt="${Title}" />
+            </a>
+            <h3>${Title}</h3>
+            <p>₹${Price}</p>
+          </div>
+        `;
 
+        // Append product to the container
         productContainer.innerHTML += productHTML;
       });
     } else {
@@ -198,19 +193,19 @@
     console.error("❌ Error fetching products:", error);
   }
 }
-  
-    
-    // Initialize AOS (Animate On Scroll)
-    AOS.init({
-      duration: 1200,
-      once: true, // Whether animation should happen only once - while scrolling down
-    });
-  
-    // Fetch products when the page loads
-    document.addEventListener("DOMContentLoaded", fetchProducts);
-    
-    // GSAP Animation for the main image
-    gsap.from(".main-image", { duration: 1, opacity: 0, y: -50 });  
+
+// Initialize AOS (Animate On Scroll)
+AOS.init({
+  duration: 1200,
+  once: true, // Animation happens only once - while scrolling down
+});
+
+// Fetch products when the page loads
+document.addEventListener("DOMContentLoaded", fetchProducts);
+
+// GSAP Animation for the main image
+gsap.from(".main-image", { duration: 1, opacity: 0, y: -50 });
+
 </script>
 
 </body>
