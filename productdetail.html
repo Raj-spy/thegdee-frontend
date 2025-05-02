@@ -78,156 +78,158 @@
   <!-- JavaScript -->
   <script> 
 
-   // Hamburger menu toggle
-   const hamburger = document.getElementById("hamburger");
-  const navLinks = document.getElementById("navLinks");
-
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
-  async function fetchProductDetails() {
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const slug = urlParams.get("slug");
+    // Hamburger menu toggle
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
   
-      if (!slug) throw new Error("Product slug not found in URL.");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
   
-      const res = await fetch(`http://localhost:1337/api/products?populate=*&filters[Slug][$eq]=${slug}`);
-      const json = await res.json();
-      const product = json.data?.[0]; // Check that the product exists
-  
-      if (!product) {
-        document.getElementById("product-details").innerHTML = "<p>❌ Product not found.</p>";
-        return;
-      }
-  
-      const { Title, Price, Description, Image, id } = product;
-      const images = Image || []; // Ensure it's an array, even if it's a single image
-  
-      // Render Images
-      let imageHTML = `
-        <div class="product-images">
-          ${images.map((img, i) => `
-            <img src="http://localhost:1337${img.formats?.medium?.url || img.url}" class="slider-image" />
-          `).join("")}
-        </div>
-      `;
-      document.getElementById("product-images").innerHTML = imageHTML;
-  
-      // Render Details
-      document.getElementById("product-details").innerHTML = `
-        <h2>${Title}</h2>
-        <p><strong>Price:</strong> ₹${Price}</p>
-        <p>${Description}</p>
-        <div class="quantity-container">
-          <button class="quantity-decrease">-</button>
-          <span id="quantity">1</span>
-          <button class="quantity-increase">+</button>
-        </div>
-        <button class="add-to-cart">Add to Cart</button>
-        <div class="button-container">
-          <button class="button">Medium</button>
-          <button class="button">Large</button>
-          <button class="button">Extra large</button>
-        </div>
-      `;
-  
-      // Quantity Logic
-      let quantity = 1;
-      const quantityDisplay = document.getElementById('quantity');
-      document.querySelector('.quantity-decrease').onclick = () => {
-        if (quantity > 1) quantityDisplay.textContent = --quantity;
-      };
-      document.querySelector('.quantity-increase').onclick = () => {
-        quantityDisplay.textContent = ++quantity;
-      };
-  
-      // Size Button Active Logic
-      document.querySelectorAll('.button-container .button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.button-container .button').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        });
-      });
-  
-      // Add to Cart Logic
-      document.querySelector('.add-to-cart').addEventListener('click', () => {
-        const selectedSize = document.querySelector('.button-container .active')?.textContent || "Medium";
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-        const existingItemIndex = cart.findIndex(item => item.id === id && item.size === selectedSize);
-  
-        if (existingItemIndex !== -1) {
-          cart[existingItemIndex].quantity += quantity;
-        } else {
-          cart.push({
-  id,
-  title: Title,
-  price: Price,
-  quantity,
-  size: selectedSize,
-  image: `http://localhost:1337${images[0]?.formats?.medium?.url || images[0]?.url}`
-});
+    async function fetchProductDetails() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get("slug");
+    
+        if (!slug) throw new Error("Product slug not found in URL.");
+    
+        const res = await fetch(`https://panel.thegdee.com/api/products?populate=*&filters[Slug][$eq]=${slug}`);
+        const json = await res.json();
+        const product = json.data?.[0]; // Check that the product exists
+    
+        if (!product) {
+          document.getElementById("product-details").innerHTML = "<p>❌ Product not found.</p>";
+          return;
         }
-  
-        localStorage.setItem('cart', JSON.stringify(cart));
-        window.location.href = "cart.html"; // Redirect to cart
-      });
-  
-      // Touch Scroll Logic for Image Slider
-      const sliderContainer = document.querySelector('.product-images');
-      let isDragging = false;
-      let startX;
-      let scrollLeft;
-  
-      sliderContainer.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.pageX - sliderContainer.offsetLeft;
-        scrollLeft = sliderContainer.scrollLeft;
-      });
-  
-      sliderContainer.addEventListener('mouseleave', () => {
-        isDragging = false;
-      });
-  
-      sliderContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-  
-      sliderContainer.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - sliderContainer.offsetLeft;
-        const walk = (x - startX) * 2; // Adjust scroll speed
-        sliderContainer.scrollLeft = scrollLeft - walk;
-      });
-  
-      // Mobile Touch Logic
-      sliderContainer.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].pageX - sliderContainer.offsetLeft;
-        scrollLeft = sliderContainer.scrollLeft;
-      });
-  
-      sliderContainer.addEventListener('touchend', () => {
-        isDragging = false;
-      });
-  
-      sliderContainer.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const x = e.touches[0].pageX - sliderContainer.offsetLeft;
-        const walk = (x - startX) * 2; // Adjust scroll speed
-        sliderContainer.scrollLeft = scrollLeft - walk;
-      });
-  
-    } catch (error) {
-      document.getElementById("product-details").innerHTML = `<p>Error loading product: ${error.message}</p>`;
+    
+        const { Title, Price, Description, Image, id } = product;
+        const images = Image || []; // Ensure it's an array, even if it's a single image
+    
+        // Render Images
+        let imageHTML = `
+          <div class="product-images">
+            ${images.map((img, i) => `
+              <img src="https://panel.thegdee.com${img.formats?.medium?.url || img.url}" class="slider-image" />
+            `).join("")}
+          </div>
+        `;
+        document.getElementById("product-images").innerHTML = imageHTML;
+    
+        // Render Details
+        document.getElementById("product-details").innerHTML = `
+          <h2>${Title}</h2>
+          <p><strong>Price:</strong> ₹${Price}</p>
+          <p>${Description}</p>
+          <div class="quantity-container">
+            <button class="quantity-decrease">-</button>
+            <span id="quantity">1</span>
+            <button class="quantity-increase">+</button>
+          </div>
+          <button class="add-to-cart">Add to Cart</button>
+          <div class="button-container">
+            <button class="button">Medium</button>
+            <button class="button">Large</button>
+            <button class="button">Extra large</button>
+          </div>
+        `;
+    
+        // Quantity Logic
+        let quantity = 1;
+        const quantityDisplay = document.getElementById('quantity');
+        document.querySelector('.quantity-decrease').onclick = () => {
+          if (quantity > 1) quantityDisplay.textContent = --quantity;
+        };
+        document.querySelector('.quantity-increase').onclick = () => {
+          quantityDisplay.textContent = ++quantity;
+        };
+    
+        // Size Button Active Logic
+        document.querySelectorAll('.button-container .button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.button-container .button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          });
+        });
+    
+        // Add to Cart Logic
+        document.querySelector('.add-to-cart').addEventListener('click', () => {
+          const selectedSize = document.querySelector('.button-container .active')?.textContent || "Medium";
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+          const existingItemIndex = cart.findIndex(item => item.id === id && item.size === selectedSize);
+    
+          if (existingItemIndex !== -1) {
+            cart[existingItemIndex].quantity += quantity;
+          } else {
+            cart.push({
+              id,
+              title: Title,
+              price: Price,
+              quantity,
+              size: selectedSize,
+              image: `https://panel.thegdee.com${images[0]?.formats?.medium?.url || images[0]?.url}`
+            });
+          }
+    
+          localStorage.setItem('cart', JSON.stringify(cart));
+          window.location.href = "cart.html"; // Redirect to cart
+        });
+    
+        // Touch Scroll Logic for Image Slider
+        const sliderContainer = document.querySelector('.product-images');
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+    
+        sliderContainer.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          startX = e.pageX - sliderContainer.offsetLeft;
+          scrollLeft = sliderContainer.scrollLeft;
+        });
+    
+        sliderContainer.addEventListener('mouseleave', () => {
+          isDragging = false;
+        });
+    
+        sliderContainer.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+    
+        sliderContainer.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          e.preventDefault();
+          const x = e.pageX - sliderContainer.offsetLeft;
+          const walk = (x - startX) * 2; // Adjust scroll speed
+          sliderContainer.scrollLeft = scrollLeft - walk;
+        });
+    
+        // Mobile Touch Logic
+        sliderContainer.addEventListener('touchstart', (e) => {
+          isDragging = true;
+          startX = e.touches[0].pageX - sliderContainer.offsetLeft;
+          scrollLeft = sliderContainer.scrollLeft;
+        });
+    
+        sliderContainer.addEventListener('touchend', () => {
+          isDragging = false;
+        });
+    
+        sliderContainer.addEventListener('touchmove', (e) => {
+          if (!isDragging) return;
+          const x = e.touches[0].pageX - sliderContainer.offsetLeft;
+          const walk = (x - startX) * 2; // Adjust scroll speed
+          sliderContainer.scrollLeft = scrollLeft - walk;
+        });
+    
+      } catch (error) {
+        document.getElementById("product-details").innerHTML = `<p>Error loading product: ${error.message}</p>`;
+      }
     }
-  }
-  
-  window.onload = fetchProductDetails;
+    
+    window.onload = fetchProductDetails;
   
   </script>
+  
 
 </body>
 </html>
