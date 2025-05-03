@@ -744,3 +744,17 @@ h1 {
     margin-top: 10px;
   }
 }
+
+
+
+/* Hover Effects on Product Cards */
+.product-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
