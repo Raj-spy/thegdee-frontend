@@ -96,44 +96,49 @@ p {
     </div>
 
     <script>
-        // Function to generate a random order ID (6 characters)
-        function generateOrderId() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let orderId = '';
-            for (let i = 0; i < 6; i++) {
-                orderId += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return orderId;
+    // Function to generate a random order ID (6 characters)
+    function generateOrderId() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let orderId = '';
+        for (let i = 0; i < 6; i++) {
+            orderId += chars.charAt(Math.floor(Math.random() * chars.length));
         }
+        return orderId;
+    }
 
-        // Get the order details from localStorage (or from your server)
-        const orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
+    // Get the order details from localStorage (or from your server)
+    const orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
 
-        if (orderDetails) {
-            // Generate a random order ID and add it to the orderDetails object
-            const randomOrderId = generateOrderId();
-            orderDetails.orderNumber = randomOrderId;  // Assign the generated order ID to the order details
+    if (orderDetails) {
+        // Generate a random order ID and add it to the orderDetails object
+        const randomOrderId = generateOrderId();
+        orderDetails.orderNumber = randomOrderId;  // Assign the generated order ID to the order details
 
-            const orderDetailsDiv = document.getElementById("order-details");
+        const orderDetailsDiv = document.getElementById("order-details");
 
-            let orderSummary = `<p><strong>Order Number:</strong> ${orderDetails.orderNumber}</p>`;
-            orderSummary += `<p><strong>Name:</strong> ${orderDetails.name}</p>`;
-            orderSummary += `<p><strong>Address:</strong> ${orderDetails.address}</p>`;
-            orderSummary += `<p><strong>Phone Number:</strong> ${orderDetails.phoneNumber}</p>`;
-            orderSummary += `<p><strong>Payment Method:</strong> ${orderDetails.paymentMethod}</p>`;
-            orderSummary += `<p><strong>Total Amount:</strong> ₹${orderDetails.totalAmount}</p>`;
+        let orderSummary = `<p><strong>Order Number:</strong> ${orderDetails.orderNumber}</p>`;
+        orderSummary += `<p><strong>Name:</strong> ${orderDetails.name}</p>`;
+        orderSummary += `<p><strong>Address:</strong> ${orderDetails.address}</p>`;
+        orderSummary += `<p><strong>Phone Number:</strong> ${orderDetails.phoneNumber}</p>`;
+        orderSummary += `<p><strong>Payment Method:</strong> ${orderDetails.paymentMethod}</p>`;
+        orderSummary += `<p><strong>Total Amount:</strong> ₹${orderDetails.totalAmount}</p>`;
 
-            orderSummary += "<h4>Products:</h4><ul>";
-            orderDetails.products.forEach(item => {
-                orderSummary += `<li>${item.title} x ${item.quantity} = ₹${item.price * item.quantity}</li>`;
-            });
-            orderSummary += "</ul>";
+        orderSummary += "<h4>Products:</h4><ul>";
+        orderDetails.products.forEach(item => {
+            orderSummary += `<li>${item.title} x ${item.quantity} = ₹${item.price * item.quantity}</li>`;
+        });
+        orderSummary += "</ul>";
 
-            orderDetailsDiv.innerHTML = orderSummary;
-        } else {
-            document.getElementById("order-details").innerHTML = "<p>No order details found. Please try again.</p>";
-        }
-    </script>
+        orderDetailsDiv.innerHTML = orderSummary;
+    } else {
+        document.getElementById("order-details").innerHTML = "<p>No order details found. Please try again.</p>";
+    }
+
+    // ✅ Redirect to products.html after 4 seconds
+    setTimeout(() => {
+        window.location.href = "products.html";
+    }, 3000);
+</script>
 
 </body>
 </html>
