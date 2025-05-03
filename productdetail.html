@@ -49,6 +49,8 @@
     <div class="product-details-container" id="product-details">Loading Details...</div>
   </div>
 
+    
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
@@ -103,13 +105,33 @@
     
         // Render Images
         let imageHTML = `
-          <div class="product-images">
-            ${images.map((img, i) => `
-              <img src="https://panel.thegdee.com${img.formats?.medium?.url || img.url}" class="slider-image" />
-            `).join("")}
-          </div>
-        `;
+  <div class="slider-wrapper">
+    <button class="slider-btn left">&#10094;</button>
+    <div class="product-images" id="image-slider">
+      ${images.map((img, i) => `
+        <img src="https://panel.thegdee.com${img.formats?.medium?.url || img.url}" class="slider-image" />
+      `).join("")}
+    </div>
+    <button class="slider-btn right">&#10095;</button>
+  </div>
+`;
+
         document.getElementById("product-images").innerHTML = imageHTML;
+        // Attach event listeners after imageHTML is added to the DOM
+document.querySelector('.slider-btn.left').addEventListener('click', () => {
+  document.getElementById('image-slider').scrollBy({
+    left: -300,
+    behavior: 'smooth'
+  });
+});
+
+document.querySelector('.slider-btn.right').addEventListener('click', () => {
+  document.getElementById('image-slider').scrollBy({
+    left: 300,
+    behavior: 'smooth'
+  });
+});
+
     
         // Render Details
         document.getElementById("product-details").innerHTML = `
@@ -223,7 +245,7 @@
     }
     
     window.onload = fetchProductDetails;
-  
+
   </script>
   
 

@@ -302,4 +302,53 @@ body {
   cursor: grabbing;
   transform: scale(0.98);
 }
- 
+
+/* Slider Styles */
+.slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.product-images {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 10px;
+}
+
+.slider-image {
+  flex-shrink: 0;
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  background: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  padding: 10px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.slider-btn:hover {
+  background: rgb(69, 69, 69);
+}
+
+.slider-btn.left {
+  left:5px;
+}
+
+.slider-btn.right {
+  right: 5px;
+}
+
