@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup, Login & Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #logoutBtn {
+            width: 100%;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #logoutBtn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Signup Page -->
+    <div id="signupPage">
+        <h1>Create an Account</h1>
+        <form id="signupForm">
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" style="display: none;">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" style="display: none;">
+        <h1>Welcome to your Dashboard</h1>
+        <p>Your account is now active.</p>
+        <button id="logoutBtn">Logout</button>
+    </div>
+
+    <script>
+        // Signup Form Logic
+        document.getElementById("signupForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const res = await fetch("https://panel.thegdee.com/api/auth/local/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        email,
+                        password
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error.message);
+                }
+
+                if (data.jwt) {
+                    localStorage.setItem("jwt", data.jwt); // Store JWT token
+                    alert("Signup successful!");
+                    showPage("dashboardPage");
+                }
+            } catch (error) {
+                alert("Signup Error: " + error.message);
+            }
+        });
+
+        // Login Form Logic
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            try {
+                const res = await fetch("https://panel.thegdee.com/api/auth/local", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        identifier: email,
+                        password: password
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error.message);
+                }
+
+                if (data.jwt) {
+                    localStorage.setItem("jwt", data.jwt); // Store JWT token
+                    alert("Login successful!");
+                    showPage("dashboardPage");
+                }
+            } catch (error) {
+                alert("Login Error: " + error.message);
+            }
+        });
+
+        // Dashboard Access Logic (Check if JWT exists)
+        function checkAuth() {
+            const jwtToken = localStorage.getItem("jwt");
+            if (jwtToken) {
+                showPage("dashboardPage");
+            } else {
+                showPage("loginPage");
+            }
+        }
+
+        // Logout Logic
+        document.getElementById("logoutBtn").addEventListener("click", function () {
+            localStorage.removeItem("jwt"); // Remove JWT token from localStorage
+            showPage("loginPage"); // Redirect to login page after logout
+        });
+
+        // Helper function to switch between pages
+        function showPage(page) {
+            const pages = ["signupPage", "loginPage", "dashboardPage"];
+            pages.forEach(function (pageId) {
+                document.getElementById(pageId).style.display = "none";
+            });
+            document.getElementById(page).style.display = "block";
+        }
+
+        // Initial page load check for authentication
+        checkAuth();
+    </script>
+</body>
+</html>
