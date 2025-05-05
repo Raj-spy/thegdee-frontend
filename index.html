@@ -9,12 +9,19 @@
 
 </head>
 <body>
-
-   <!-- 🔁 Background Video -->
-  <video autoplay muted loop class="video-bg">
-    <source src="media/bg-2.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+ <!-- 🔁 Background Video -->
+<video autoplay muted loop class="video-bg">
+  <!-- MP4 Format for most browsers -->
+  <source src="media/bg-2.mp4" type="video/mp4">
+  <!-- WebM Format for browsers that support it -->
+  <source src="media/bg-2.webm" type="video/webm">
+  <!-- OGG Format for browsers that support it -->
+  <source src="media/bg-2.ogv" type="video/ogg">
+  
+  <!-- Fallback message for unsupported browsers -->
+  Your browser does not support the video tag. 
+  <img src="fallback-image.jpg" alt="Fallback Image" />
+</video>
 
   <!-- 🌟 Overlay Content -->
   <div class="overlay">
