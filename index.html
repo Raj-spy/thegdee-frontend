@@ -2,30 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>thegdee.com</title>
+  <title>Thegdeeclothing</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore premium drops, core fits, and exclusive streetwear by The GDEE.">
+  
+  <!-- ✅ Favicon fix -->
+  <link rel="icon" href="media/favicon-16x16.png" type="image/png">
+  
+  <!-- ✅ CSS file -->
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="/Frontned/media/favicon-16x16.png" type="image/png">
-
 </head>
 <body>
- <!-- 🔁 Background Video -->
-<video autoplay muted loop class="video-bg">
-  <!-- MP4 Format for most browsers -->
-  <source src="media/bg-2.mp4" type="video/mp4">
-  <!-- WebM Format for browsers that support it -->
-  <source src="media/bg-2.webm" type="video/webm">
-  <!-- OGG Format for browsers that support it -->
-  <source src="media/bg-2.ogv" type="video/ogg">
-  
-  <!-- Fallback message for unsupported browsers -->
-  Your browser does not support the video tag. 
-  <img src="fallback-image.jpg" alt="Fallback Image" />
-</video>
+
+  <!-- 🔁 Background Video -->
+  <video autoplay muted loop playsinline class="video-bg">
+    <source src="media/bg-2.mp4" type="video/mp4">
+    <source src="media/bg-2.webm" type="video/webm">
+    <source src="media/bg-2.ogv" type="video/ogg">
+    <!-- Fallback image for unsupported browsers -->
+    <img src="media/fallback-image.jpg" alt="Fallback Background Image" />
+  </video>
 
   <!-- 🌟 Overlay Content -->
   <div class="overlay">
-    <img src="media/thegdee logo without bg.png" alt="Logo" class="logo">
+    <img src="media/thegdee logo without bg.png" alt="The GDEE Logo" class="logo">
 
     <div class="categories">
       <a href="products.html">All Collection</a>
@@ -35,43 +35,42 @@
     </div>
   </div>
 
-  
+  <!-- ❌ You referenced #product-container but never added it -->
+  <!-- Uncomment this if needed -->
+  <!-- <div id="product-container"></div> -->
 
-
+  <!-- ✅ JS: Use correct URL in production -->
   <script>
     async function fetchProducts() {
       try {
-        const res = await fetch('http://localhost:1337/api/products');
+        // ❗ Replace this with your actual deployed API endpoint
+        const res = await fetch('https://api.yourdomain.com/products');
         const data = await res.json();
-  
+
         const products = data.data;
         const container = document.getElementById('product-container');
-  
+
+        if (!container) return;
+
         products.forEach(product => {
-          const item = product; // Directly using product
-  
           const div = document.createElement('div');
           div.className = 'product';
-  
           div.innerHTML = `
-            <h3>${item.Title}</h3>
-            <p><strong>Price:</strong> ₹${item.Price}</p>
-            <p><strong>Size:</strong> ${item.Sizes}</p>
-            <p><strong>Description:</strong> ${item.Description}</p>
+            <h3>${product.Title}</h3>
+            <p><strong>Price:</strong> ₹${product.Price}</p>
+            <p><strong>Size:</strong> ${product.Sizes}</p>
+            <p><strong>Description:</strong> ${product.Description}</p>
           `;
-  
           container.appendChild(div);
         });
-  
+
       } catch (err) {
         console.error('Error fetching products:', err);
       }
     }
-  
-    fetchProducts(); 
+
+    fetchProducts();
   </script>
-  
-  
 
 </body>
 </html>
