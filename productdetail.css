@@ -352,3 +352,15 @@ body {
   right: 5px;
 }
 
+.product-images {
+  display: flex;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.slider-image {
+  min-width: 100%;
+  flex-shrink: 0;
+  max-height: 500px;
+  object-fit: contain;
+}
