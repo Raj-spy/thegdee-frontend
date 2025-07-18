@@ -223,8 +223,46 @@
       }
     }
 
+     /* Styling for the marquee container */
+    .marquee-container {
+      width: 100%;
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+      padding: 10px 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      overflow: hidden; /* Hide anything outside the container */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
+
+    /* Styling for the marquee text to make it scroll smoothly */
+    .marquee {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 15s linear infinite; /* Make the scroll smooth and continuous */
+    }
+
+    /* Keyframes for smooth left-to-right scrolling */
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%); /* Start off the screen to the right */
+      }
+      100% {
+        transform: translateX(-100%); /* Move completely off the screen to the left */
+      }
+    }
   </style>
 </head>
+ <div class="marquee-container">
+    <div class="marquee">
+      📢 Limited Offers 10% OFF on first orders.
+    </div>
+  </div>
+
 <body>
   <h1>Your Cart</h1>
 
