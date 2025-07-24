@@ -219,6 +219,7 @@ body {
   display: none; /* Chrome, Safari */
 }
 
+
 .product-card {
   flex: 0 0 auto;
   min-width: 300px; /* Increased the min-width */
@@ -776,3 +777,7 @@ h1 {
 }
 
 
+.old-price {
+  color: red;
+  font-size: 18px;
+}
