@@ -35,6 +35,9 @@ body, html {
 .logo {
   width: 150px;
   margin-bottom: 20px;
+   /* width: 80px; */
+  /* margin-bottom: 1rem; */
+  filter: drop-shadow(0 0 5px #fdfdfd);
 }
 
 .categories {

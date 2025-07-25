@@ -12,6 +12,8 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
  <link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
 
 
@@ -112,9 +114,20 @@
   </section>
 
   
+ 
+  <!-- Popup Card -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-card">
+    <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
+    <img src="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/thegdee_logo_withoutbg.png?raw=true" alt="Thegdee Logo" class="popup-img">
+    <h2>🔥 Welcome to THEGDEE!</h2>
+    <p><strong>FIRST USERS</strong>  get 10% OFF on your first order.</p>
+    <a href="collection.html" class="popup-btn">Shop Now</a>
+  </div>
+</div>
 
 
-
+  
 
 
   
@@ -155,6 +168,18 @@
 
 
 <script>
+     // Show popup after delay
+window.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("popup");
+  setTimeout(() => {
+    popup.style.display = "flex";
+  }, 500); // show after 0.5 sec
+});
+
+// Close popup on click
+document.getElementById("popupClose").addEventListener("click", () => {
+  document.getElementById("popup").style.display = "none";
+});
   // Hamburger menu toggle
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("navLinks");
