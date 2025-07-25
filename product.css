@@ -777,7 +777,9 @@ h1 {
 }
 
 
-.old-price {
+ .old-price {
   color: red;
-  font-size: 18px;
+  text-decoration: line-through;
+  font-size: 18px
 }
+
