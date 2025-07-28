@@ -118,7 +118,7 @@ body {
   height: 2px;
   left: 0;
   bottom: -2px;
-  background-color: #00e68a;
+  background-color: #bf00ff;
   transition: width 0.3s ease;
 }
 
@@ -127,7 +127,7 @@ body {
 }
 
 .nav-links li a:hover {
-  color: #00e68a;
+  color: #f8f3f7;
 }
 
 /* Login Icon */
