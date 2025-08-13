@@ -1,119 +1,185 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" href=" https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "st3jdhcox6");
-</script>
-  <title>About Us | Thegdee</title>
+  <link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
+  <title>About Us | TheGDee</title>
   <style>
     :root {
-      --bg: #f9f9f9;
-      --text: #2c2c2c;
-      --accent: #111111;
-      --muted: #555;
-      --light-gray: #eaeaea;
+      --bg: #fafafa;
+      --text-dark: #1a1a1a;
+      --text-light: #555;
+      --border: #e5e5e5;
+      --accent: #000;
+      --accent-green: #00b86b;
     }
-
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
-      color: var(--text);
+      color: var(--text-dark);
       line-height: 1.7;
-      font-size: 14px;
-      padding: 40px 20px;
     }
-
-    .container {
-      max-width: 800px;
+    header {
+      background-color: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 1rem;
+      color: #ccc;
+      max-width: 600px;
       margin: auto;
     }
-
-    h1, h2 {
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 12px;
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 50px 20px;
     }
-
-    h1 {
-      font-size: 28px;
-    }
-
     h2 {
-      font-size: 20px;
-      margin-top: 40px;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
     }
-
-    p {
-      margin-bottom: 20px;
-      color: var(--muted);
-    }
-
+    p { margin-bottom: 20px; color: var(--text-light); font-size: 1rem; }
     .divider {
       height: 1px;
-      background: var(--light-gray);
+      background: var(--border);
       margin: 40px 0;
     }
-
+    /* Trust badges */
+    .trust-section {
+      display: flex;
+      gap: 20px;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 30px 0;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .trust-item {
+      flex: 1 1 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+    }
+    .trust-item i {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: var(--accent-green);
+    }
+    .trust-item span {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    /* Responsive */
+    @media(max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .container { padding: 30px 15px; }
+    }
     footer {
       text-align: center;
-      padding-top: 30px;
-      font-size: 12px;
-      color: #888;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border);
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <div class="container">
-    <h1>About Thegdee</h1>
-    <p><strong>Thegdee</strong> is a modern tee brand built for the bold generation. We don’t follow trends—we define them. Every piece we create is rooted in quality, simplicity, and expression. Our designs are minimal yet meaningful, allowing you to wear your identity with confidence.</p>
+<header>
+  <h1>About TheGDee</h1>
+  <p>Built with vision, trusted by our customers, and crafted for those who value quality over compromise.</p>
+</header>
 
-    <div class="divider"></div>
+<div class="container">
 
-    <h2>Our Vision</h2>
-    <p>To become the most trusted Gen Z fashion brand that redefines everyday essentials through timeless quality and minimal aesthetics.</p>
+  <section>
+    <h2>Who We Are</h2>
+    <p><strong>TheGDee</strong> is not just a clothing label — it’s a commitment. We’re a modern fashion brand devoted to creating timeless essentials with honesty, precision, and care. Our goal is simple: deliver products you can trust and wear with pride, day after day.</p>
+  </section>
 
-    <h2>Our Quality</h2>
-    <p>All our tees are crafted from premium fabrics designed to last. We focus on clean stitching, soft hand-feel, and long-lasting prints. Every product passes through multiple quality checks before it reaches you—because what you wear matters.</p>
+  <section>
+    <h2>Our Mission</h2>
+    <p>We aim to redefine modern essentials for today’s generation. Guided by minimal design, unmatched comfort, and uncompromising ethics, TheGDee offers apparel that tells your story — without shouting.</p>
+  </section>
 
-    <h2>Our Design Philosophy</h2>
-    <p>Clean. Confident. Intentional. At Thegdee, we strip away the noise and focus on delivering wearable essentials with attitude. We believe in minimalism with a message.</p>
+  <section>
+    <h2>Quality You Can Count On</h2>
+    <p>Every garment is crafted from premium, long-lasting fabrics that feel as good as they look. We ensure every product meets our high standards through rigorous quality checks before it reaches you, so you can shop with complete confidence.</p>
+  </section>
 
-    <div class="divider"></div>
+  <section>
+    <h2>Our Promise</h2>
+    <p>We believe trust is earned, not given. From clear product descriptions to transparent policies, our focus is on honest communication and customer satisfaction in every interaction.</p>
+  </section>
 
-    <h2>Store Policies</h2>
+  <div class="divider"></div>
 
-    <h3 style="margin-top: 20px;">No Refund Policy</h3>
-    <p>We currently do not offer refunds. All purchases are final. Please review product details and sizing before placing an order.</p>
-
-    <h3>Shipping</h3>
-    <p>We deliver across India. Orders are processed within 2-3 business days and shipped via trusted courier services. Delivery usually takes 4-7 working days depending on your location.</p>
-
-    <h3>Privacy</h3>
-    <p>We respect your privacy. Your information is used solely for order processing and communication. We never sell or share your data.</p>
-
-    <h3>Terms</h3>
-    <p>All images, logos, and content on our site belong to Thegdee. Copying, reproduction, or misuse without permission is prohibited and legally actionable.</p>
-
-    <div class="divider"></div>
-
-    <footer>
-      &copy; 2025 Thegdee Clothing. Built with vision, worn with pride.
-    </footer>
+  <!-- ✅ Trust Signals -->
+  <div class="trust-section">
+    <div class="trust-item">
+      <i class="fas fa-lock"></i>
+      <span>100% Secure Payments</span>
+      <p>We use encrypted payment gateways to ensure your transactions are safe & confidential.</p>
+    </div>
+    <div class="trust-item">
+      <i class="fas fa-redo"></i>
+      <span>7-Day Easy Returns</span>
+      <p>If the product is unused & in original condition, request a return within 7 days.</p>
+    </div>
+    <div class="trust-item">
+      <i class="fas fa-hand-holding-usd"></i>
+      <span>Money-Back Guarantee</span>
+      <p>Full refund if your return meets our policy terms.</p>
+    </div>
+    <div class="trust-item">
+      <i class="fas fa-truck-fast"></i>
+      <span>Fast Shipping</span>
+      <p>Orders ship within 2-3 business days via trusted couriers.</p>
+    </div>
   </div>
+
+  <!-- ✅ Shipping & Returns Policy -->
+  <section>
+    <h2>Clear Shipping & Returns Policy</h2>
+    <p><strong>Processing Time:</strong> Orders are processed within 2-3 business days after payment confirmation.</p>
+    <p><strong>Delivery Time:</strong> We deliver across India within 4-7 working days depending on your location.</p>
+    <p><strong>Shipping Fees:</strong> Free shipping for all prepaid orders above ₹999. COD orders may have an additional charge.</p>
+    <p><strong>Returns:</strong> You can request a return within 7 days of delivery. Items must be unused, unwashed, and in the original packaging.</p>
+    <p><strong>Refunds:</strong> Once we receive your return in our warehouse and verify its condition, we will process your refund within 5-7 business days.</p>
+    <p><strong>Exchanges:</strong> If you need a different size, we offer exchanges subject to product availability.</p>
+  </section>
+
+  <section>
+    <h2>Store Policies</h2>
+    <p><strong>No Refunds for Final Sale Items:</strong> Marked sale items are non-returnable and non-refundable.</p>
+    <p><strong>Privacy:</strong> Your information is used solely for order processing and will never be shared or sold to third parties.</p>
+    <p><strong>Terms:</strong> All content, images, and designs are property of TheGDee. Unauthorized use is prohibited.</p>
+  </section>
+
+</div>
+
+<footer>
+  &copy; 2025 TheGDee Clothing. Ethical. Minimal. Made for you.
+</footer>
 
 </body>
 </html>

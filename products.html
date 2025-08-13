@@ -44,8 +44,8 @@
         <li><a href="collection.html">New Drops</a></li>
         <li><a href="collection.html">Collections</a></li>
         <li><a href="collection.html">Shop All</a></li>
-        <li><a href="signup.html">Lookbook</a></li>
-        <li><a href="signup.html" class="sale-link">Sale</a></li>
+        <!-- <li><a href="signup.html">Lookbook</a></li> -->
+        <!-- <li><a href="signup.html" class="sale-link">Sale</a></li> -->
       </ul>
       <!-- <i class="fas fa-search search-icon"></i> -->
       <a href="cart.html">
@@ -71,6 +71,8 @@
   <div class="mini-sale-badge">10% OFF ON FIRST ORDER</div>
   <h1>Hottest Drops</h1>
 <div id="product-container" class="horizontal-scroll"></div>
+<!-- <span class="sale-badge">Sale</span> -->
+ 
 
   <!-- scroll  -->
   <div class="marquee-container">
@@ -86,51 +88,12 @@
     <h2 class="latest-heading">OUR LATEST COLLECTION</h2>
   
     <div class="latest-product-wrap">
-      <!-- Product 1 -->
-      <div class="latest-card">
-        <div class="latest-img">
-          <img src="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/fallen%20icon%20back.png?raw=true" alt="Neon Noir Hoodie" />
-          <span class="label">NEW DROP</span>
-        </div>
-        <div class="latest-content">
-          <h3>FALLEN ICON TEE</h3>
-          <p>Where techwear meets street soul. Reflective details. Stealth flex. 🌌</p>
-          <a href="collection.html">
-            <button class="shop-btn">Shop Drop ⟶</button>
-          </a>
-          
-        </div>
-      </div>
-  
-      <!-- Product 2 -->
-      <div class="latest-card">
-        <div class="latest-img">
-          <img src="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/thunder.png?raw=true" alt="Cyber Core Tee" />
-          <span class="label">GEN-Z VIBE</span>
-        </div>
-        <div class="latest-content">
-          <h3>THUNDER CORE TEE</h3>
-          <p>Sleek minimalism with neon hits. Drip for the digital era. 🦾</p>
-          <a href="collection.html">
-            <button class="shop-btn">Shop Drop ⟶</button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+ <!-- Product 1 --> <div class="latest-card"> <div class="latest-img"> <img src="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/fallen%20icon%20back.png?raw=true" alt="Fallen Icon Tee - Thegdee Streetwear" /> <span class="label">NEW DROP</span> </div> <div class="latest-content"> <h3>FALLEN ICON TEE</h3> <p>Techwear DNA with street soul. Reflective ink. Clean silhouette. Built for late nights and neon lights.</p> <p style="color:#888;font-size:0.9rem;margin:0.6rem 0 1rem;">Heavyweight 220GSM · Soft-touch cotton blend · True-to-size fit</p> <a href="collection.html"> <button class="shop-btn">Shop Drop ⟶</button> </a> <p style="color:#999;font-size:0.85rem;margin-top:0.6rem;">Limited batch - Restocks aren’t promised</p> </div> </div> <!-- Product 2 --> <div class="latest-card"> <div class="latest-img"> <img src="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/thunder.png?raw=true" alt="Thunder Core Tee - Thegdee Streetwear" /> <span class="label">GEN‑Z VIBE</span> </div> <div class="latest-content"> <h3>THUNDER CORE TEE</h3> <p>Sleek minimal frame, electric graphic energy. Built for the scroll, made for the street.</p> <p style="color:#888;font-size:0.9rem;margin:0.6rem 0 1rem;">Ultra-soft 200GSM · Fade-resistant print · Relaxed street fit</p> <a href="collection.html"> <button class="shop-btn">Shop Drop ⟶</button> </a> <p style="color:#999;font-size:0.85rem;margin-top:0.6rem;">Ships in 24–48h - Easy 7‑day exchange</p> </div> </div>
 
   
  
-  <!-- Popup Card -->
-<div class="popup-overlay" id="popup">
-  <div class="popup-card">
-    <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
-    <img src="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/thegdee_logo_withoutbg.png?raw=true" alt="Thegdee Logo" class="popup-img">
-    <h2>🔥 Welcome to THEGDEE!</h2>
-    <p><strong>FIRST USERS</strong>  get 10% OFF on your first order.</p>
-    <a href="collection.html" class="popup-btn">Shop Now</a>
-  </div>
-</div>
+ 
+
 
 
   
@@ -174,18 +137,6 @@
 
 
 <script>
-     // Show popup after delay
-window.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById("popup");
-  setTimeout(() => {
-    popup.style.display = "flex";
-  }, 500); // show after 0.5 sec
-});
-
-// Close popup on click
-document.getElementById("popupClose").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "none";
-});
   // Hamburger menu toggle
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("navLinks");

@@ -1,152 +1,198 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href=" https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "st3jdhcox6");
-</script>
-    <title>Order Confirmation</title>
-    <style>
-         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order Confirmed - Thegdee Clothing</title>
+<link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+  --bg:#0b0b0b; --card:#141414;
+  --text:#f2f2f2; --muted:#b9b9b9;
+  --accent:#00e68a; --accent-2:#2af0a3;
+  --border:#1f1f1f; --radius:14px;
+}
+
+/* Base */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0d0d0d;
-    color: #e0e0e0;
-    margin: 0;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  font-family:'Inter',sans-serif;
+  background:radial-gradient(90% 120% at 10% 10%,#0f231b 0%,#0b0b0b 48%) fixed;
+  color:var(--text);
+  min-height:100vh;
+  padding:32px 16px;
+  display:grid; place-items:center;
+}
+.wrap { width:min(720px, 100%); }
+
+/* Card */
+.card {
+  background:rgba(20,20,20,0.96);
+  border-radius:var(--radius);
+  border:1px solid rgba(0,255,150,0.25);
+  padding:22px;
+  box-shadow:0 8px 28px rgba(0,0,0,.38);
+  position:relative;
 }
 
-.confirmation-container {
-    background: #121212;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-    border-radius: 12px;
-    padding: 30px 40px;
-    max-width: 600px;
-    width: 100%;
-    box-shadow: 0 0 15px rgba(0, 255, 150, 0.2), 0 0 30px rgba(0, 255, 150, 0.1);
-    position: relative;
-    overflow: hidden;
+/* Header */
+.header { display:flex; gap:14px; align-items:center; }
+.badge {
+  flex:0 0 48px; height:48px; display:grid; place-items:center;
+  border-radius:50%; background:rgba(0,230,138,0.12);
+  color:var(--accent); border:1px solid rgba(0,230,138,0.35);
 }
+.title h1 { font-size:1.6rem; font-weight:800; margin:0; }
+.subtitle { color:var(--muted); font-size:0.95rem; margin-top:4px; }
 
-.confirmation-container::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    padding: 2px;
-    background: linear-gradient(135deg, #00e68a, #00664d);
-    z-index: -1;
+/* Meta pills */
+.meta { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+.pill {
+  padding:6px 12px; border-radius:999px;
+  border:1px solid var(--border); font-size:0.9rem;
 }
+.pill.success { background:rgba(0,230,138,0.1); border-color:rgba(0,230,138,0.3); color:#b6ffdf; }
 
-h1 {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    color: #00e68a;
+/* Actions */
+.actions { margin:12px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.btn {
+  padding:10px 14px; border-radius:10px; cursor:pointer;
+  border:1px solid #262626; background:#0e0e0e; color:#fff;
+  font-weight:700; font-size:0.95rem;
 }
-
-p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    color: #cfcfcf;
+.btn.primary {
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  color:#05150d; border:none;
 }
+.btn.ghost { background:transparent; }
 
-.order-summary {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #333;
-    font-size: 0.95rem;
+/* Key-values grid */
+.section { margin-top:14px; padding-top:12px; border-top:1px dashed #2a2a2a; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.kv {
+  background:#101010; padding:12px; border-radius:10px;
 }
+.k { font-size:0.85rem; color:var(--muted); }
+.v { font-weight:700; }
 
-@media (max-width: 600px) {
-    .confirmation-container {
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    p {
-        font-size: 0.95rem;
-    }
+/* Products list */
+.products summary {
+  cursor:pointer; display:flex; justify-content:space-between;
+  padding:12px; font-weight:700;
 }
+.products .items { border-top:1px solid var(--border); }
+.item { display:grid; grid-template-columns:56px 1fr auto; gap:12px; padding:10px 12px; border-top:1px dashed #262626; }
+.thumb { width:56px; height:56px; object-fit:cover; border-radius:8px; }
 
-    </style>
+/* Totals */
+.totals { margin-top:10px; background:#0f0f0f; padding:12px; border-radius:10px; }
+.row { display:flex; justify-content:space-between; margin-top:4px; }
+.row.total { font-weight:900; font-size:1.05rem; }
+
+/* Trust row */
+.trust { display:flex; flex-wrap:wrap; gap:14px; font-size:0.9rem; margin-top:14px; border-top:1px dashed #2a2a2a; padding-top:10px; }
+.trust i { color:var(--accent); }
+
+.note { color:var(--muted); font-size:0.85rem; margin-top:10px; text-align:center; }
+@media(max-width:600px){ .grid { grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
-
-    <div class="confirmation-container">
-        <h1>Order Confirmation</h1>
-        <p>Your order has been successfully placed.</p>
-        <p>Thank you for shopping with us! We are processing your order.</p>
-        
-        <div class="order-summary">
-            <h3>Order Details</h3>
-            <div id="order-details">
-                <!-- Order details will be dynamically inserted here -->
-            </div>
-        </div>
-
-        <p>We will send you an email and SMS once your order is dispatched.</p>
+<div class="wrap">
+  <div class="card">
+    <div class="header">
+      <div class="badge"><i class="fas fa-check"></i></div>
+      <div class="title">
+        <h1>Order Confirmed</h1>
+        <div class="subtitle">We’ve emailed you a confirmation and will notify you when it ships.</div>
+      </div>
     </div>
 
-    <script>
-    // Function to generate a random order ID (6 characters)
-    function generateOrderId() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let orderId = '';
-        for (let i = 0; i < 6; i++) {
-            orderId += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return orderId;
-    }
+    <div class="meta" id="meta-bar"></div>
 
-    // Get the order details from localStorage (or from your server)
-    const orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
+    <div class="actions">
+      <button class="btn primary" id="trackBtn"><i class="fas fa-truck-fast"></i> Track my order</button>
+      <button class="btn" id="downloadBtn"><i class="fas fa-file-arrow-down"></i> Download invoice</button>
+      <button class="btn ghost" id="printBtn"><i class="fas fa-print"></i> Print</button>
+    </div>
 
-    if (orderDetails) {
-        // Generate a random order ID and add it to the orderDetails object
-        const randomOrderId = generateOrderId();
-        orderDetails.orderNumber = randomOrderId;  // Assign the generated order ID to the order details
+    <div class="section">
+      <div class="grid">
+        <div class="kv"><div class="k">Order number</div><div class="v" id="ordNo">—</div></div>
+        <div class="kv"><div class="k">Estimated delivery</div><div class="v" id="eta">—</div></div>
+        <div class="kv"><div class="k">Customer</div><div class="v" id="cust">—</div></div>
+        <div class="kv"><div class="k">Shipping address</div><div class="v" id="addr">—</div></div>
+      </div>
+    </div>
 
-        const orderDetailsDiv = document.getElementById("order-details");
+    <details class="products section" open>
+      <summary>Items in your order <i class="fas fa-chevron-down"></i></summary>
+      <div class="items" id="items"></div>
+    </details>
 
-        let orderSummary = `<p><strong>Order Number:</strong> ${orderDetails.orderNumber}</p>`;
-        orderSummary += `<p><strong>Name:</strong> ${orderDetails.name}</p>`;
-        orderSummary += `<p><strong>Address:</strong> ${orderDetails.address}</p>`;
-        orderSummary += `<p><strong>Phone Number:</strong> ${orderDetails.phoneNumber}</p>`;
-        orderSummary += `<p><strong>Payment Method:</strong> ${orderDetails.paymentMethod}</p>`;
-        orderSummary += `<p><strong>Total Amount:</strong> ₹${orderDetails.totalAmount}</p>`;
+    <div class="totals">
+      <div class="row"><span>Subtotal</span><span id="subt">—</span></div>
+      <div class="row"><span>Delivery</span><span id="ship">—</span></div>
+      <div class="row" id="discRow" style="display:none"><span>Discount</span><span id="disc">—</span></div>
+      <div class="row total"><span>Total paid</span><span id="grand">—</span></div>
+    </div>
 
-        orderSummary += "<h4>Products:</h4><ul>";
-        orderDetails.products.forEach(item => {
-            orderSummary += `<li>${item.title} x ${item.quantity} = ₹${item.price * item.quantity}</li>`;
-        });
-        orderSummary += "</ul>";
+    <div class="trust">
+      <div><i class="fas fa-lock"></i> SSL secure checkout</div>
+      <div><i class="fas fa-arrow-rotate-left"></i> Easy returns</div>
+      <div><i class="fas fa-headset"></i> 24/7 Support</div>
+    </div>
 
-        orderDetailsDiv.innerHTML = orderSummary;
-    } else {
-        document.getElementById("order-details").innerHTML = "<p>No order details found. Please try again.</p>";
-    }
+    <div class="note">Need help? <a href="contact.html" style="color:var(--accent)">Contact support</a></div>
+  </div>
+</div>
 
-    // ✅ Redirect to products.html after 4 seconds
-    setTimeout(() => {
-        window.location.href = "products.html";
-    }, 3000);
+<script>
+const fmtINR = n => "₹"+Number(n||0).toLocaleString("en-IN");
+const addDays = (d, n) => { const dt = new Date(d); dt.setDate(dt.getDate()+n); return dt; };
+const fmtDate = d => d.toLocaleDateString("en-IN",{ day:"2-digit", month:"short", year:"numeric" });
+const randomOrderNo = () => [...Array(6)].map(()=> "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random()*32)]).join("");
+
+const data = JSON.parse(localStorage.getItem("orderDetails") || "{}");
+data.orderNumber = data.orderNumber || randomOrderNo();
+
+document.getElementById("ordNo").textContent = "#"+data.orderNumber;
+document.getElementById("eta").textContent = fmtDate(addDays(new Date(), 4));
+document.getElementById("cust").textContent = data.name || "-";
+document.getElementById("addr").textContent = data.address || "-";
+
+// Pills
+const paid = (String(data.paymentMethod||"").toLowerCase() !== "cod");
+document.getElementById("meta-bar").innerHTML =
+  `<div class="pill success"><i class="fas fa-money-check"></i> ${paid?"Payment received":"Cash on Delivery"}</div>`;
+
+// Items
+const itemsEl = document.getElementById("items");
+(data.products||[]).forEach(p=>{
+  const li = document.createElement("div");
+  li.className="item";
+  li.innerHTML = `<img src="${p.image||'https://via.placeholder.com/56'}" class="thumb"/>
+                  <div><div class="name">${p.title}</div><div class="meta">Size: ${p.size||"-"} × ${p.quantity}</div></div>
+                  <div class="price">${fmtINR(p.price*p.quantity)}</div>`;
+  itemsEl.appendChild(li);
+});
+
+// Totals
+document.getElementById("subt").textContent = fmtINR(data.subtotal||data.totalAmount||0);
+document.getElementById("ship").textContent = fmtINR(data.deliveryCharge||0);
+if(data.discount>0){ 
+  document.getElementById("discRow").style.display="flex";
+  document.getElementById("disc").textContent = "-"+fmtINR(data.discount);
+}
+document.getElementById("grand").textContent = fmtINR(data.totalAmount||0);
+
+// Actions
+document.getElementById("trackBtn").onclick=()=>alert("Tracking details will be sent once order is shipped.");
+document.getElementById("downloadBtn").onclick=()=>alert("Invoice download coming soon.");
+document.getElementById("printBtn").onclick=()=>window.print();
 </script>
-
 </body>
 </html>

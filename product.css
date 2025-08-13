@@ -8,12 +8,14 @@
   box-sizing: border-box;
 }
 
+ /* Updated Base Styles */
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #000000;
-  color: #f0f0f0;
+  background-color: hsl(0, 0%, 100%); /* ✅ White background */
+  color: #000000; /* ✅ Minimal dark text */
   padding: 1rem;
   padding-top: 0;
+  overflow-x: hidden; /* ✅ Remove horizontal scroll */
 }
 
 /* Navbar */
@@ -27,7 +29,7 @@ body {
   align-items: center;
   padding: 15px 30px;
   background-color: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   z-index: 1000;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -46,9 +48,9 @@ body {
 .logo-wrapper {
   padding: 10px 20px;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 0, 0, 0.1);
+  /* background: rgba(0, 0, 0, 0.3); */
+  /* backdrop-filter: blur(12px); */
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 0, 0, 0.1); */
   transition: transform 0.3s ease;
 }
 
@@ -81,12 +83,33 @@ body {
   color: #777;
 }
 
-/* Hamburger (mobile only) */
+ /* 🌐 Hamburger menu button */
 .hamburger {
-  display: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+  display: none;                /* hidden by default (desktop) */
+  font-size: 1.5rem;             /* icon size */
+  cursor: pointer;               /* pointer on hover */
+  background: none;              /* remove button style if using <button> */
+  border: none;
+  color: #111;                   /* icon/text color */
+  padding: 8px;                  /* tap area padding */
+  border-radius: 6px;            /* subtle rounded corners */
+  transition: background 0.2s ease, color 0.2s ease; /* smooth hover effect */
 }
+
+/* Hover / focus state */
+.hamburger:hover,
+.hamburger:focus {
+  background: rgba(0,0,0,0.05);  /* light hover background */
+  outline: none;                 /* no default outline */
+}
+
+/* 📱 Show on mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;              /* visible on mobile/tablet */
+  }
+}
+
 
 .nav-links {
   display: flex;
@@ -100,7 +123,7 @@ body {
 }
 
 .nav-links li a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
@@ -192,6 +215,29 @@ body {
   display: block;
   object-fit: contain;
 }
+/* Minimal modern heading style for e‑commerce */
+h1 {
+  font-family: 'Anton', sans-serif; /* Bold display font */
+  font-size: clamp(2rem, 5vw, 3rem); /* Responsive sizing */
+  font-weight: 700;
+  color: #000000; /* White text for dark background */
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 2rem 0 1rem;
+  position: relative;
+}
+
+/* Optional minimal underline accent */
+h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #bf00ff; /* Accent color from your theme */
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
 
 
 /* .main-image:hover {
@@ -205,129 +251,118 @@ body {
   }
 }
 
+ /* Simple product grid */
 .horizontal-scroll {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 20px;
-  scroll-behavior: smooth;
-
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none;    /* Firefox */
-}
-.horizontal-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 per row desktop */
+  gap: 10px; /* small uniform gap */
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* no scroll */
 }
 
-
+/* Product card basic style */
+ /* Product card basic style */
+ /* Make product cards ready for badge */
+ /* Base card positioning for badges */
 .product-card {
-  flex: 0 0 auto;
-  min-width: 300px; /* Increased the min-width */
-  max-width: 300px; /* Increased the max-width */
-  background-color: #000; /* Black background */
-  border: 1px solid #333; /* Optional: subtle dark border */
-  border-radius: 10px;
-  text-align: center;
-  padding: 20px; /* Increased padding for a more spacious look */
-  color: #fff; /* White text */
-  box-shadow: 0 4px 12px  rgb(104, 104, 104), 0 1px 6px rgba(159, 35, 35, 0.2); /* Larger shadow for more impact */
+  position: relative;
 }
 
+/* ——— SALE BADGE (only on specific cards) ——— */
+.horizontal-scroll .product-card:nth-child(1)::before,
+.horizontal-scroll .product-card:nth-child(3)::before {
+  content: "Sale";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: red;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* ——— CUT PRICE badge (on EVERY card) ——— */
+.product-card::after {
+  content: "Rs-1199";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  z-index: 1;
+   text-decoration: line-through; /* This makes it look cut */
+  text-decoration-thickness: 2px; /* thicker strike */
+  text-decoration-color: #605d5d; /* keep the strike same as text */
+}
+
+
+
+/* Product image */
 .product-card img {
   width: 100%;
-  height: 250px; /* Increased image height */
+  height: auto;
   object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #444; /* Optional: for clean image edges */
+  border-radius: 5px;
 }
 
-
+/* Product text */
 .product-card h3,
 .product-card p {
-  margin: 10px 0;
-  color: #fff;
+  margin: 5px 0;
+  color: #000000;
+  font-size: 15px;
 }
-
-h1 {
-  font-family: 'Anton', sans-serif; /* Default font */
-  font-size: 4vw; /* Font size relative to viewport width */
-  font-weight: bold;
-  color: #ff7700; /* Firey color */
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  letter-spacing: 2px;
-  white-space: nowrap; /* Prevent text from wrapping */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  h1 {
-      font-family: 'Bungee Spice', sans-serif; /* For smaller screens */
-      font-size: 10vw; /* Adjust font size for smaller screens */
-      margin-top: 20px;
-      margin-bottom: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-      font-family: 'Special Gothic Expanded One', sans-serif; /* For very small screens */
-      font-size: 9vw; /* Further adjust font size for very small screens */
-      margin-top: 15px;
-      margin-bottom: 15px;
-  }
-}
-
-
-/* Hover effect */
-.product:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(255, 0, 153, 0.3);
-}
-
- 
-.product:hover img {
-  transform: scale(1.03);
-}
-
-/* Sale badge */
-.sale-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: white;
-  color: black;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-family: 'Arial', sans-serif;
-}
-
-/* Product title */
- 
 
 /* Price wrapper */
 .price-wrapper {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 5px;
   align-items: center;
 }
 
-/* Old price */
 .old-price {
   color: #888;
   text-decoration: line-through;
   font-size: 0.85rem;
 }
 
-/* New price */
 .new-price {
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
+}
+/* Sale badge */
+.sale-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: red; /* or any color you want */
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+/* 2 per row on mobile */
+@media (max-width: 768px) {
+  .horizontal-scroll {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Media Queries */
@@ -380,15 +415,30 @@ h1 {
 }
 
  
-  /* Section heading */
+ /* Improved minimal + premium section heading */
 .latest-heading {
-  color: #fff;
-  font-size: 2.8rem;
+  font-family: 'Anton', sans-serif; /* bold modern display font */
+  font-size: clamp(2rem, 5vw, 3rem); /* responsive scaling */
+  font-weight: 700;
+  color: #000; /* black for contrast on light background */
   text-align: center;
-  margin: 3rem 0;
-  font-family: 'Anton', sans-serif;
   letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 2.5rem 0 1.5rem;
+  position: relative;
 }
+
+/* Subtle accent underline for brand feel */
+.latest-heading::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #bf00ff; /* your theme’s accent color */
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
 
  /* Wrap for products */
 .latest-product-wrap {
@@ -399,181 +449,128 @@ h1 {
   padding: 0 1rem;
 }
 
-/* Individual product card */
+ /* Card container - flexible layout */
 .latest-card {
-  background-color: #111; /* Dark background for sleek feel */
-  border-radius: 16px;
-  width: 100%;
-  max-width: 400px;
+  background-color: #fff;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(255, 0, 153, 0.1); /* Lighter shadow for a more subtle effect */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #333; /* Subtle border to separate cards */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column; /* mobile default */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Hover effect for card */
 .latest-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgb(96, 96, 96); /* More prominent shadow */
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
 }
 
-/* Product image section */
+/* Product Image */
 .latest-img {
   position: relative;
-  width: 100%;
-  height: 350px;
+  flex: 1;
+  min-height: 260px;
   overflow: hidden;
-  border-bottom: 2px solid #444; /* Subtle border under image for cleaner separation */
 }
 
 .latest-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
-.latest-img:hover img {
-  transform: scale(1.05); /* Smooth zoom effect */
+.latest-card:hover .latest-img img {
+  transform: scale(1.04);
 }
 
-/* Label (more refined) */
+/* Sale / New Label */
 .label {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #820aea94; /* Vibrant but not overpowering */
+  top: 14px;
+  left: 14px;
+  background-color: #bf00ff;
   color: #fff;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 25px;
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  text-transform: uppercase;
 }
 
-/* Product content section */
+/* Card Content */
 .latest-content {
+  flex: 1;
   padding: 1.5rem;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .latest-content h3 {
-  font-size: 1.6rem; /* Slightly larger title for better readability */
-  color: #fff;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.6rem;
   margin-bottom: 0.5rem;
-  font-family: 'Orbitron', sans-serif; /* Bold and modern font */
-  font-weight: 700;
+  color: #000;
 }
 
 .latest-content p {
-  font-size: 1rem;
-  color: #ccc;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.2rem;
   line-height: 1.5;
-  margin-bottom: 1rem;
-  font-family: 'Inter', sans-serif; /* Clean, modern font */
 }
 
-/* Shop button */
+/* CTA Button */
 .shop-btn {
-  background-color: #000000;
+  background-color: #000;
   color: #fff;
   border: none;
-  padding: 12px 30px; /* Increased padding for better button feel */
-  font-size: 1rem;
+  padding: 0.8rem 1.8rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 30px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  align-self: start; /* aligns left on desktop */
 }
 
 .shop-btn:hover {
-  background-color:#252525 ; 
-  transform: scale(1.05); /* Slight scaling effect for hover */
+  background-color: #111;
+  transform: translateY(-2px);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Desktop layout: side-by-side */
+@media (min-width: 769px) {
   .latest-card {
+    flex-direction: row; /* side-by-side */
     max-width: 100%;
+    min-height: 350px;
   }
-
-  .latest-content h3 {
-    font-size: 1.4rem;
-  }
-
-  .latest-content p {
-    font-size: 0.9rem;
-  }
-
-  .shop-btn {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-}
-
-
-/* Responsive for Tablets and Small Devices */
-@media (max-width: 768px) {
-  .latest-product-wrap {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .latest-card {
-    max-width: 100%;
-  }
-
   .latest-img {
-    height: 250px;
+    flex-basis: 55%;
+    min-height: 100%;
+  }
+  .latest-content {
+    flex-basis: 45%;
+    text-align: left;
   }
 }
 
-/* Responsive for Laptops and Medium Screens */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .latest-product-wrap {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-
-  .latest-card {
-    max-width: 48%;
-  }
-
-  .latest-img {
-    height: 400px;
-  }
-}
-
-/* ✅ 2-Column Layout for Large Screens */
+/* Large screen width tweaks */
 @media (min-width: 1025px) {
-  .latest-product-wrap {
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: stretch;
-  }
-
   .latest-card {
-    flex: 1 1 50%;
-    max-width: 50%;
+    max-width: 90%;
   }
-
-  .latest-img {
-    height: 450px;
+  .latest-content h3 {
+    font-size: 1.8rem;
   }
 }
-
-/* Optional: Larger image on ultra-wide screen */
-@media (min-width: 1440px) {
-  .latest-img {
-    height: 500px;
-  }
-}
-
-
 
 
 /* scroll */
@@ -606,7 +603,7 @@ h1 {
   white-space: nowrap;
   font-size: 2.8rem;
   font-weight: 900;
-  color: white;
+  color: rgb(0, 0, 0);
   font-family: 'Anton', sans-serif;
   letter-spacing: 2px;
   margin-right: 4rem; /* gap between repeats */
@@ -643,20 +640,20 @@ h1 {
 }
 
  
-/* footer */
-/* Footer Styling */
+
+ /* Footer - full width, clean look */
 .footer {
-  background-color: #000; /* Pure black background */
-  color: #fff;
-  padding: 30px 20px;
-  font-family: 'Arial', sans-serif;
+  background-color: #fff;              /* white background */
+  color: #000;
+  width: 100%;
+  margin: 0;
+  padding: 2rem 1rem;
+  font-family: 'Inter', 'Arial', sans-serif;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-  position: relative;
-  z-index: 10;
+  border-top: 1px solid rgba(0,0,0,0.08); /* subtle top border for separation */
 }
 
-/* Footer Content */
+/* Main footer content */
 .footer-content {
   display: flex;
   justify-content: space-between;
@@ -664,87 +661,86 @@ h1 {
   flex-wrap: wrap;
   max-width: 1100px;
   margin: 0 auto;
+  gap: 1.5rem;
 }
 
-/* Footer Logo */
+/* Brand section */
+.footer-logo {
+  text-align: center;
+}
 .footer-logo img {
-  width: 120px;
-  margin-bottom: 5px;
+  width: 110px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
 }
-
 .footer-logo p {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #fff;
-  letter-spacing: 0.5px;
-  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #555; /* softer text for tagline */
+  letter-spacing: 0.3px;
+  margin: 0;
 }
 
-/* Footer Links */
+/* Links section */
 .footer-links ul {
   list-style: none;
   padding: 0;
   display: flex;
-  gap: 30px;
+  gap: 1.5rem;
   margin: 0;
+  flex-wrap: wrap;
 }
-
 .footer-links li {
   font-size: 0.9rem;
 }
-
 .footer-links a {
   text-decoration: none;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
+  color: #000;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
 }
-
 .footer-links a:hover {
-  color:  #00e68a; /* Soft pink color on hover */
+  color: #bf00ff; /* your brand accent */
 }
 
-/* Social Media Icons */
+/* Social icons section */
 .footer-social {
   display: flex;
-  gap: 15px;
+  gap: 1rem;
 }
-
 .social-icon {
-  font-size: 1.3rem;
-  color: #fff;
-  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 1.2rem;
+  color: #000;
+  transition: color 0.2s, transform 0.2s;
 }
-
 .social-icon:hover {
-  color:  #00e68a;
-  transform: scale(1.2); /* Slight zoom effect on hover */
+  color: #bf00ff; /* brand accent on hover */
+  transform: scale(1.1);
 }
 
-/* Footer Bottom */
+/* Bottom copyright */
 .footer-bottom {
   font-size: 0.8rem;
-  color: #ddd;
-  margin-top: 20px;
+  color: #777;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 0.8rem;
 }
 
-/* Responsive Styling */
+/* Responsive layout */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
-    align-items: center;
+    text-align: center;
   }
-
   .footer-links {
-    margin-top: 10px;
-    gap: 15px;
+    order: 3;
   }
-
   .footer-social {
-    margin-top: 10px;
+    order: 2;
   }
 }
+
 
 
 
@@ -798,105 +794,123 @@ h1 {
   z-index: 9999;
 }
 
-/* Card */
-.popup-card {
-  background: linear-gradient(to bottom right, #1a1a1a, #111);
-  border: 1px solid #2e2e2e;
-  border-radius: 1rem;
-  padding: 2rem;
-  width: 90%;
-  max-width: 360px;
-  text-align: center;
-  box-shadow: 0 0 24px rgba(255, 255, 255, 0.05);
-  color: #f0f0f0;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  animation: popupFade 0.5s ease-in-out;
-  position: relative;
+ /* Overlay – smooth, soft backdrop */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem; /* extra for small screens */
+  z-index: 9999;
+  animation: fadeIn 0.4s ease-out;
 }
 
-/* Close Button */
+/* Card – clean, premium styling */
+.popup-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem 1.8rem;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  color: #000;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  animation: scaleIn 0.35s ease-out;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Close button – clean & minimal */
 .popup-close {
   position: absolute;
-  top: 1.2rem;
-  right: 1.5rem;
+  top: 1rem;
+  right: 1rem;
   background: none;
   border: none;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: #999;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
-
 .popup-close:hover {
-  color: #fff;
+  color: #000;
 }
 
-/* Image */
+/* Logo – slightly smaller for balance */
 .popup-img {
-  width: 90px;
+  width: 75px;
   margin-bottom: 1rem;
-  filter: drop-shadow(0 0 5px #fdfdfd);
+  border-radius: 50%;
+  object-fit: contain;
 }
 
-/* Headline */
+/* Headline – bold & inviting */
 .popup-card h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-  color: #f9f9f9;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: #000;
+  line-height: 1.3;
 }
 
-/* Paragraph */
+/* Text – readable and soft */
 .popup-card p {
   font-size: 0.95rem;
+  color: #555;
   margin-bottom: 1.4rem;
-  color: #c5c5c5;
+  line-height: 1.45;
 }
 
-/* CTA Button */
+/* Highlight bold numbers in the message */
+.popup-card p strong {
+  color: #111;
+}
+
+/* CTA button – strong brand feel */
 .popup-btn {
   display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background: #ffffff10;
-  border: 1px solid #ffffff22;
-  border-radius: 8px;
+  padding: 0.75rem 1.6rem;
+  background: #000;
   color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
   text-decoration: none;
   font-size: 0.95rem;
-  transition: background 0.3s, transform 0.2s;
+  letter-spacing: 0.5px;
+  transition: background 0.25s ease, transform 0.2s ease;
 }
-
 .popup-btn:hover {
-  background: #ffffff15;
-  transform: scale(1.02);
+  background: #222;
+  transform: translateY(-1px);
 }
 
-@keyframes popupFade {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Animations for smooth entry */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-/* Responsive */
+/* Mobile adjustments */
 @media (max-width: 480px) {
   .popup-card {
     padding: 1.5rem;
   }
-
   .popup-card h2 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
-
   .popup-card p {
     font-size: 0.9rem;
   }
-
   .popup-btn {
     font-size: 0.9rem;
+    padding: 0.65rem 1.3rem;
   }
 }
