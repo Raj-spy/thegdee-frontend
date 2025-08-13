@@ -1,57 +1,255 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Thegdeeclothing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <meta name="description" content="Explore premium drops, core fits, and exclusive streetwear by Thegdee."> -->
-  <meta name="description" content="Explore premium drops, core fits, and exclusive streetwear by Thegdee.">
-  <link rel="icon" href=" https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
- <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "st3jdhcox6");
-</script>
+<meta charset="UTF-8" />
+<title>Thegdee Clothing — Premium Streetwear</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0b0b0b" />
+<meta name="description" content="Explore premium drops, core fits, and exclusive streetwear by Thegdee. Clean silhouettes, bold attitude, crafted for everyday wear." />
+<link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png" />
 
-  
-   
-  
-  <!-- ✅ CSS file -->
-  <link rel="stylesheet" href="style.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --bg:#0b0b0b;
+  --text:#f2f2f2;
+  --muted:#b9b9b9;
+  --brand:#abacac;
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: 'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* Video background */
+.video-bg{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter: saturate(1.05) contrast(1.02) brightness(.9);
+  z-index:-2;
+}
+
+/* Wash overlay with parallax */
+.wash{
+  position:fixed; inset:0;
+  background:
+    radial-gradient(100% 70% at 50% 40%, transparent 0%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.75) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 70%);
+  z-index:-1;
+  transition: transform .25s ease;
+}
+
+/* Hero overlay */
+.overlay{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  text-align:center;
+}
+.logo{
+  max-width:220px;
+  margin-bottom:10px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65));
+  animation: fadeInDown 1s ease both;
+}
+
+/* Tagline */
+.tagline{
+  margin:0 0 24px;
+  font-size:0.95rem;
+  color:var(--muted);
+  letter-spacing: 0.3px;
+  animation: fadeInUp .8s ease both;
+  min-height: 1.4em;
+}
+
+/* Categories */
+.categories{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  justify-content:center;
+  animation: fadeInUp 1.2s ease both;
+}
+.categories a{
+  position:relative;
+  text-decoration:none;
+  color:var(--text);
+  padding:12px 22px;
+  background:rgba(20,20,20,0.6);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--radius);
+  font-weight:600;
+  font-size:0.95rem;
+  letter-spacing:0.3px;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  overflow:hidden;
+}
+.categories a::after{
+  content:"";
+  position:absolute; inset:0;
+  background: radial-gradient(180px 180px at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.2), transparent 48%);
+  opacity:0; transition:opacity .25s ease;
+  pointer-events:none;
+}
+.categories a:hover::after{opacity:1;}
+.categories a:hover{
+  background:var(--brand);
+  color:#000;
+  transform:translateY(-2px);
+  box-shadow:0 6px 14px rgba(0,0,0,.4);
+}
+
+/* Video toggle */
+.vid-toggle{
+  margin-top:16px;
+  background: rgba(20,20,20,0.55);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 0.86rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all .2s ease;
+}
+.vid-toggle:hover{ background: rgba(20,20,20,0.75); }
+
+/* Trust strip */
+.trust-float{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(16,16,16,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+  animation: fadeInUp 0.7s ease both;
+}
+.trust-float span{
+  font-size: 0.78rem;
+  color: #eaeaea;
+  opacity: 0.85;
+}
+
+/* Animations */
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* Focus styles */
+.categories a:focus, .vid-toggle:focus{
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .logo{ max-width:180px; }
+  .categories{ gap:10px; }
+  .categories a{ padding:10px 18px; font-size:0.88rem; }
+}
+</style>
 </head>
 <body>
 
-  <!-- 🔁 Background Video -->
-  <video autoplay muted loop playsinline class="video-bg">
-  <source src=" https://github.com/Raj-spy/thegdee-frontend/raw/refs/heads/main/media/Untitled%20video%20-%20Made%20with%20Clipchamp.mp4" type="video/mp4">
-  <!-- Optional: Add Cloudinary WebM and OGG versions if you upload them -->
-  <!--
-  <source src="https://res.cloudinary.com/your-cloud-name/video/upload/your-webm.webm" type="video/webm">
-  <source src="https://res.cloudinary.com/your-cloud-name/video/upload/your-ogg.ogv" type="video/ogg">
-  -->
+<!-- Background Video -->
+<video autoplay muted loop playsinline poster="media/fallback-image.jpg" class="video-bg">
+  <source src="https://github.com/Raj-spy/thegdee-frontend/raw/refs/heads/main/media/Untitled%20video%20-%20Made%20with%20Clipchamp.mp4" type="video/mp4">
   <img src="media/fallback-image.jpg" alt="Fallback Background Image" />
 </video>
+<div class="wash"></div>
 
-
-  <!-- 🌟 Overlay Content -->
-  <div class="overlay">
- <img src="https://media.githubusercontent.com/media/Raj-spy/thegdee-frontend/main/media/thegdee_logo_withoutbg.png" alt="Thegdee" class="logo" />
-
-    <div class="categories">
-      <a href="products.html">All Collection</a>
-      <a href="collection.html">Premium Drop</a>
-      <a href="signup.html">Drop Zone</a>
-      <a href="signup.html">Core Fits</a>
-    </div>
+<!-- Overlay -->
+<div class="overlay">
+  <img src="https://media.githubusercontent.com/media/Raj-spy/thegdee-frontend/main/media/thegdee_logo_withoutbg.png" alt="Thegdee Clothing" class="logo" />
+  <p class="tagline" id="tagline"></p>
+  <div class="categories">
+    <a href="products.html">All Collection</a>
+    <a href="collection.html">Premium Drop</a>
+    <a href="signup.html">Drop Zone</a>
+    <a href="signup.html">Core Fits</a>
   </div>
+  <button class="vid-toggle" id="vidToggle" aria-label="Pause video">Pause video</button>
+</div>
 
-  <!-- ❌ You referenced #product-container but never added it -->
-  <!-- Uncomment this if needed -->
-  <!-- <div id="product-container"></div> -->
+<!-- Trust floating strip -->
+<div class="trust-float">
+  <span>SSL Secure</span>
+  <span>Easy Returns</span>
+  <span>Fast Shipping</span>
+</div>
 
-  <!-- ✅ JS: Use correct URL in production -->
+<!-- Scripts -->
+<script>
+// Magnetic hover
+document.querySelectorAll('.categories a').forEach(btn=>{
+  btn.addEventListener('mousemove', e=>{
+    const r = btn.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    btn.style.setProperty('--mx', x+'%');
+    btn.style.setProperty('--my', y+'%');
+  });
+});
+
+// Tagline rotator
+const lines = [
+  "Minimal silhouettes. Maximum intent.",
+  "Built for daily wear, made to last.",
+  "Premium drops. Honest pricing.",
+  "Street DNA. Clean execution."
+];
+let i=0;
+function cycleTagline(){
+  const el = document.getElementById('tagline');
+  if(!el) return;
+  el.style.opacity = 0;
+  setTimeout(()=>{
+    el.textContent = lines[i % lines.length];
+    i++;
+    el.style.opacity = 1;
+  }, 200);
+}
+cycleTagline();
+setInterval(cycleTagline, 2800);
+
+// Parallax wash
+const wash = document.querySelector('.wash');
+window.addEventListener('mousemove', (e)=>{
+  const x = (e.clientX / window.innerWidth - 0.5) * 1.5;
+  const y = (e.clientY / window.innerHeight - 0.5) * 1.5;
+  if (wash) wash.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+// Video toggle
+const vid = document.querySelector('.video-bg');
+const toggle = document.getElementById('vidToggle');
+if (toggle && vid) {
+  toggle.addEventListener('click', ()=>{
+    if (vid.paused) { vid.play(); toggle.textContent = 'Pause video'; }
+    else { vid.pause(); toggle.textContent = 'Play video'; }
+  });
+}
+</script>
 
 </body>
 </html>
