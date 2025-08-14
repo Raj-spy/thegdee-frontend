@@ -68,6 +68,26 @@
     </p>
   </div>
 
+
+   <!-- Minimal Feedback Form -->
+<div class="feedback-section-minimal">
+  <h3>Leave a Review</h3>
+  <form id="feedbackForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+
+    <div class="star-rating" id="starRating">
+      ★★★★★
+    </div>
+
+    <textarea id="review" placeholder="Write your feedback..." required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- Minimal Reviews List -->
+<ul class="feedback-list" id="feedbackList"></ul>
+
+
   <div class="testimonial-card">
     <div class="testimonial-header no-photo">
       <div class="avatar-initial">P</div>
@@ -120,7 +140,103 @@
   </footer>
  <!-- <script src="script.js" ></script> -->
   <!-- JavaScript -->
-  <script>
+   <script> 
+ let selectedRating = 0;
+
+// Generate unique user ID for this device/session
+if (!localStorage.getItem("userId")) {
+  localStorage.setItem(
+    "userId",
+    Date.now().toString(36) + Math.random().toString(36).substr(2)
+  );
+}
+let currentUserId = localStorage.getItem("userId");
+
+// Render stars
+document.getElementById("starRating").innerHTML = "★★★★★"
+  .split("")
+  .map((star, i) => `<span data-index="${i}">★</span>`)
+  .join("");
+
+// Handle star click
+document.querySelectorAll("#starRating span").forEach(star => {
+  star.addEventListener("click", function () {
+    selectedRating = Number(this.dataset.index) + 1;
+    document.querySelectorAll("#starRating span").forEach((s, index) => {
+      s.classList.toggle("selected", index < selectedRating);
+    });
+  });
+});
+
+// Render feedback list
+function renderFeedbackList() {
+  let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
+  let listHTML = "";
+
+  savedReviews.forEach((r, index) => {
+    listHTML += `
+      <li>
+        <div class="review-content">
+          <strong>${r.name}</strong> 
+          <span class="review-meta">${"★".repeat(r.selectedRating)}</span>
+          <div>"${r.review}"</div>
+        </div>
+        ${r.userId === currentUserId 
+          ? `<button class="delete-btn" onclick="deleteFeedback(${index})">&times;</button>`
+          : ""}
+      </li>
+    `;
+  });
+
+  document.getElementById("feedbackList").innerHTML = listHTML;
+}
+
+// Submit review
+document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  let name = document.getElementById("name").value;
+  let review = document.getElementById("review").value;
+
+  if (selectedRating === 0) {
+    alert("Please select a rating");
+    return;
+  }
+
+  let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
+  savedReviews.push({ 
+    name, 
+    review, 
+    selectedRating, 
+    userId: currentUserId // Save review owner ID
+  });
+
+  localStorage.setItem("productReviews", JSON.stringify(savedReviews));
+
+  this.reset();
+  selectedRating = 0;
+  document.querySelectorAll("#starRating span").forEach(s => s.classList.remove("selected"));
+  renderFeedbackList();
+});
+
+// Delete review
+function deleteFeedback(index) {
+  let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
+  
+  // Only delete if current user is owner
+  if (savedReviews[index].userId === currentUserId) {
+    savedReviews.splice(index, 1);
+    localStorage.setItem("productReviews", JSON.stringify(savedReviews));
+    renderFeedbackList();
+  } else {
+    alert("❌ You can only delete your own feedback.");
+  }
+}
+
+// Load reviews on page load
+window.addEventListener("load", renderFeedbackList);
+
+
     const hamburger = document.getElementById("hamburger");
     const navLinks = document.getElementById("navLinks");
     hamburger.addEventListener("click", () => {
