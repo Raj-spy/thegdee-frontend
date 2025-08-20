@@ -344,7 +344,7 @@
            image: `https://panel.thegdee.com${images[0]?.formats?.medium?.url || images?.url}`
          };
          localStorage.setItem('buyNowItem', JSON.stringify(buyNowItem));
-         window.location.href = "checkout.html"; // ✅ change to cart.html if checkout not ready
+         window.location.href = "cart.html"; // ✅ change to cart.html if checkout not ready
        });
 
      } catch (error) {
