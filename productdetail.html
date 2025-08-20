@@ -273,25 +273,37 @@
        `;
        document.getElementById("product-images").innerHTML = imageHTML;
 
-       // Render Details
-       document.getElementById("product-details").innerHTML = `
-         <h2>${Title}</h2>
-         <p><strong>Price: <span class="old-price">Rs 1199</span> -</strong> ₹${Price}</p>
-         <p>${Description}</p>
-         <div class="quantity-container">
-           <button class="quantity-decrease">-</button>
-           <span id="quantity">1</span>
-           <button class="quantity-increase">+</button>
-         </div>
-         <button class="add-to-cart">Add to Cart</button>
-         <button class="buy-now">Buy Now</button> <!-- ✅ NEW BUTTON -->
-         <div class="button-container">
-           <button class="button">Small</button>
-           <button class="button">Medium</button>
-           <button class="button">Large</button>
-           <button class="button">Extra large</button>
-         </div>
-       `;
+ // Render Details
+document.getElementById("product-details").innerHTML = `
+  <h2>${Title}</h2>
+  <p><strong>Price: <span class="old-price">Rs 1199</span> -</strong> ₹${Price}</p>
+
+  <div class="quantity-container">
+    <button class="quantity-decrease">-</button>
+    <span id="quantity">1</span>
+    <button class="quantity-increase">+</button>
+  </div>
+
+  <!-- Action Buttons Wrapper -->
+  <div class="action-buttons">
+    <button class="buy-now">Buy Now</button>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+
+  <!-- Size Buttons Grid -->
+  <div class="extra-buttons">
+    <button class="button">Small</button>
+    <button class="button">Medium</button>
+    <button class="button">Large</button>
+    <button class="button">Extra Large</button>
+  </div>
+
+
+
+  <!-- ✅ Product Details Heading with Description -->
+  <h3>Product Details:</h3>
+  <p>${Description}</p>
+`;
 
        // Quantity Logic
        let quantity = 1;
