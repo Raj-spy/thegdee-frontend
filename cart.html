@@ -52,8 +52,23 @@ src="https://www.facebook.com/tr?id=605958209231658&ev=PageView&noscript=1"
     <button class="continue-btn" onclick="continueShopping()">Add more items</button>
   </div>
 
-  <script>
-    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  <!-- <script> -->
+     <script>
+    let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // ✅ Check if Buy Now item is saved
+    const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem"));
+    if (buyNowItem) {
+        // Add it to cartItems (same behavior like add to cart)
+        cartItems.push(buyNowItem);
+
+        // Save to cart storage
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+
+        // Remove buyNowItem so it won't duplicate on refresh
+        localStorage.removeItem("buyNowItem");
+    }
+
     const container = document.getElementById("cart-items");
     const finalTotalElement = document.getElementById("final-total");
     let totalAmount = 0;
@@ -61,68 +76,68 @@ src="https://www.facebook.com/tr?id=605958209231658&ev=PageView&noscript=1"
     const backendURL = "http://127.0.0.1:1337"; // Update to your backend URL
 
     if (cartItems.length === 0) {
-      container.innerHTML = "<p>Your cart is empty.</p>";
-      finalTotalElement.innerHTML = "";
-      const checkoutBtn = document.querySelector(".checkout-btn");
-      if (checkoutBtn) checkoutBtn.style.display = "none";
+        container.innerHTML = "<p>Your cart is empty.</p>";
+        finalTotalElement.innerHTML = "";
+        const checkoutBtn = document.querySelector(".checkout-btn");
+        if (checkoutBtn) checkoutBtn.style.display = "none";
     } else {
-      cartItems.forEach((item, index) => {
-        const quantity = item.quantity || 1;
-        const price = item.price || 0;
-        const oldPrice = item.oldPrice || null;
-        const title = item.title || "Product";
-        
-        const totalPrice = price * quantity;
-        totalAmount += totalPrice;
+        cartItems.forEach((item, index) => {
+            const quantity = item.quantity || 1;
+            const price = item.price || 0;
+            const oldPrice = item.oldPrice || null;
+            const title = item.title || "Product";
 
-        let imageUrl = "https://placehold.co/150x150"; // Default placeholder
+            const totalPrice = price * quantity;
+            totalAmount += totalPrice;
 
-        if (item.image && typeof item.image === "string") {
-          if (item.image.startsWith("http")) {
-            imageUrl = item.image;
-          } else {
-            imageUrl = `${backendURL}${item.image}`;
-          }
-        }
+            let imageUrl = "https://placehold.co/150x150"; // Default placeholder
+            if (item.image && typeof item.image === "string") {
+                if (item.image.startsWith("http")) {
+                    imageUrl = item.image;
+                } else {
+                    imageUrl = `${backendURL}${item.image}`;
+                }
+            }
 
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <img src="${imageUrl}" alt="${title}" />
-          <div class="cart-details">
-            <h3>${title}</h3>
-            <div class="cart-info">
-              <p>Size: ${item.size || "N/A"}</p>
-              <p>Quantity: ${quantity}</p>
-            </div>
-            <div class="price-wrapper">
-              ${oldPrice ? `<span class="old-price">₹${oldPrice}</span>` : ""}
-              <span class="new-price">₹${price}</span>
-            </div>
-            <p class="total-price">Total: ₹${totalPrice}</p>
-            <button class="delete-btn" onclick="deleteItem(${index})" title="Remove item">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
-        `;
-        container.appendChild(div);
-      });
+            const div = document.createElement("div");
+            div.className = "cart-item";
+            div.innerHTML = `
+              <img src="${imageUrl}" alt="${title}" />
+              <div class="cart-details">
+                <h3>${title}</h3>
+                <div class="cart-info">
+                  <p>Size: ${item.size || "N/A"}</p>
+                  <p>Quantity: ${quantity}</p>
+                </div>
+                <div class="price-wrapper">
+                  ${oldPrice ? `<span class="old-price">₹${oldPrice}</span>` : ""}
+                  <span class="new-price">₹${price}</span>
+                </div>
+                <p class="total-price">Total: ₹${totalPrice}</p>
+                <button class="delete-btn" onclick="deleteItem(${index})" title="Remove item">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            `;
+            container.appendChild(div);
+        });
 
-      finalTotalElement.innerHTML = `Estimated total: Rs.${totalAmount}`;
+        finalTotalElement.innerHTML = `Estimated total: Rs.${totalAmount}`;
 
-      const checkoutBtn = document.querySelector(".checkout-btn");
-      if (checkoutBtn) checkoutBtn.style.display = "block";
+        const checkoutBtn = document.querySelector(".checkout-btn");
+        if (checkoutBtn) checkoutBtn.style.display = "block";
     }
 
     function deleteItem(index) {
-      cartItems.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cartItems));
-      location.reload();
+        cartItems.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        location.reload();
     }
 
     function continueShopping() {
-      window.location.href = 'products.html';
+        window.location.href = 'products.html';
     }
-  </script>
+</script>
+
 </body>
 </html>
