@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product Details</title>
 
-  <!-- Meta/Tracking (unchanged) -->
+  <!-- Tracking (as in your code) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -36,15 +36,23 @@
   <link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
 
   <style>
-    /* Optional UX: active size styling (if not already in your CSS) */
-    .extra-buttons .button.active {
-      border:2px solid #00e68a;
-      background:rgba(0,230,138,0.12);
+    /* Mobile-only 2x2 grid for size buttons (desktop CSS untouched) */
+    @media (max-width: 600px) {
+      .extra-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .extra-buttons .button {
+        width: 100%;
+      }
     }
-    .action-buttons { display:flex; gap:10px; margin:12px 0; }
-    .quantity-container { display:flex; align-items:center; gap:10px; margin:12px 0; }
-    .quantity-container button { width:32px; height:32px; }
-    .extra-buttons { display:grid; grid-template-columns:repeat(4,auto); gap:10px; margin:12px 0; }
+
+    /* Optional: visible selection state for size */
+    .extra-buttons .button.active {
+      border: 2px solid #00e68a;
+      background: rgba(0,230,138,0.12);
+    }
   </style>
 </head>
 <body>
@@ -164,9 +172,7 @@
 
   <!-- JavaScript -->
   <script>
-    // ----------------------------
     // Helpers
-    // ----------------------------
     const safeNum = (v) => {
       const n = Number(v);
       return Number.isFinite(n) ? n : 0;
@@ -180,9 +186,7 @@
       return "https://panel.thegdee.com" + (medium || direct || "");
     };
 
-    // ----------------------------
-    // Rating + Reviews (unchanged logic with minor safety)
-    // ----------------------------
+    // Rating + Reviews
     let selectedRating = 0;
 
     if (!localStorage.getItem("userId")) {
@@ -265,18 +269,14 @@
     }
     window.addEventListener("load", renderFeedbackList);
 
-    // ----------------------------
     // Navbar
-    // ----------------------------
     const hamburger = document.getElementById("hamburger");
     const navLinks = document.getElementById("navLinks");
     hamburger.addEventListener("click", () => {
       navLinks.classList.toggle("show");
     });
 
-    // ----------------------------
     // Product fetch + render
-    // ----------------------------
     async function fetchProductDetails() {
       try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -294,7 +294,7 @@
         const { Title, Price, Description, Image, id } = product;
         const images = Array.isArray(Image) ? Image : (Image ? [Image] : []);
 
-        // Images slider
+        // Render Images
         const imagesHTML = `
           <div class="slider-wrapper">
             <button class="slider-btn left">&#10094;</button>
@@ -309,7 +309,7 @@
         `;
         document.getElementById("product-images").innerHTML = imagesHTML;
 
-        // Details section
+        // Render Details
         document.getElementById("product-details").innerHTML = `
           <h2>${Title}</h2>
           <p><strong>Price: <span class="old-price">Rs 1199</span> -</strong> ₹${Price}</p>
@@ -337,7 +337,7 @@
           <p>${Description || ""}</p>
         `;
 
-        // Quantity logic
+        // Quantity Logic
         let quantity = 1;
         const quantityDisplay = document.getElementById('quantity');
         document.querySelector('.quantity-decrease').onclick = () => {
@@ -351,25 +351,18 @@
           quantityDisplay.textContent = quantity;
         };
 
-        // Size selection: correct container + default active (Medium)
+        // Size selection: correct container + default selection (Medium)
         const sizeButtons = document.querySelectorAll('.extra-buttons .button');
         const setActive = (btn) => {
           sizeButtons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
         };
-        // Default select Medium (2nd button)
         const defaultBtn = document.querySelector('.extra-buttons .button[data-size="M"]') || sizeButtons[1] || sizeButtons;
         if (defaultBtn) setActive(defaultBtn);
 
         sizeButtons.forEach(btn => {
           btn.addEventListener('click', () => setActive(btn));
         });
-
-        const getSelectedSize = () => {
-          const el = document.querySelector('.extra-buttons .button.active');
-          // fallback to "M" code, but UI text will show full label in cart if needed
-          return el?.dataset?.size || "M";
-        };
 
         const getSelectedSizeLabel = () => {
           const el = document.querySelector('.extra-buttons .button.active');
@@ -378,7 +371,6 @@
 
         // Add to Cart
         document.querySelector('.add-to-cart').addEventListener('click', () => {
-          const selectedSizeCode = getSelectedSize();
           const selectedSizeLabel = getSelectedSizeLabel();
           const cart = JSON.parse(localStorage.getItem('cart')) || [];
           const existingIndex = cart.findIndex(item => item.id === id && item.size === selectedSizeLabel);
@@ -410,7 +402,7 @@
             image: getFirstImageUrl(images)
           };
           localStorage.setItem('buyNowItem', JSON.stringify(buyNowItem));
-          window.location.href = "cart.html"; // or checkout.html when ready
+          window.location.href = "cart.html"; // change to checkout when ready
         });
 
       } catch (error) {
