@@ -1,6 +1,11 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+
+  <!-- Meta/Tracking (unchanged) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -16,23 +21,33 @@
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=605958209231658&ev=PageView&noscript=1"
   /></noscript>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Details</title>
-  <link rel="stylesheet" href="productdetail.css" />
-  <link rel="stylesheet" href="product.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
+
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "st3jdhcox6");
-</script>
+  </script>
+
+  <link rel="stylesheet" href="productdetail.css" />
+  <link rel="stylesheet" href="product.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="https://github.com/Raj-spy/thegdee-frontend/blob/main/media/favicon-16x16.png?raw=true" type="image/png">
+
+  <style>
+    /* Optional UX: active size styling (if not already in your CSS) */
+    .extra-buttons .button.active {
+      border:2px solid #00e68a;
+      background:rgba(0,230,138,0.12);
+    }
+    .action-buttons { display:flex; gap:10px; margin:12px 0; }
+    .quantity-container { display:flex; align-items:center; gap:10px; margin:12px 0; }
+    .quantity-container button { width:32px; height:32px; }
+    .extra-buttons { display:grid; grid-template-columns:repeat(4,auto); gap:10px; margin:12px 0; }
+  </style>
 </head>
 <body>
-
 
   <nav class="navbar">
     <div class="nav-left">
@@ -59,75 +74,72 @@
     </div>
   </nav>
 
-
   <!-- Product Section -->
   <div class="product-container">
     <div class="product-images-container" id="product-images">Loading Images...</div>
     <div class="product-details-container" id="product-details">Loading Details...</div>
   </div>
  
- <!-- Testimonials + Feedback Form -->
- <div class="testimonials-grid">
+  <!-- Testimonials + Feedback Form -->
+  <div class="testimonials-grid">
 
-  <div class="testimonial-card">
-    <div class="testimonial-header no-photo">
-      <div class="avatar-initial">R</div>
-      <div>
-        <h3>Rahul Mehta</h3>
-        <div class="stars">★★★★★</div>
+    <div class="testimonial-card">
+      <div class="testimonial-header no-photo">
+        <div class="avatar-initial">R</div>
+        <div>
+          <h3>Rahul Mehta</h3>
+          <div class="stars">★★★★★</div>
+        </div>
       </div>
+      <p class="review-text">
+        "The quality is outstanding! The fit, fabric, and stitching are premium.
+        Definitely coming back for more."
+      </p>
     </div>
-    <p class="review-text">
-      "The quality is outstanding! The fit, fabric, and stitching are premium.
-      Definitely coming back for more."
-    </p>
-  </div>
 
-   <!-- Minimal Feedback Form -->
-<div class="feedback-section-minimal">
-  <h3>Leave a Review</h3>
-  <form id="feedbackForm">
-    <input type="text" id="name" placeholder="Your Name" required>
-    <div class="star-rating" id="starRating">★★★★★</div>
-    <textarea id="review" placeholder="Write your feedback..." required></textarea>
-    <button type="submit">Submit</button>
-  </form>
-</div>
+    <!-- Minimal Feedback Form -->
+    <div class="feedback-section-minimal">
+      <h3>Leave a Review</h3>
+      <form id="feedbackForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <div class="star-rating" id="starRating">★★★★★</div>
+        <textarea id="review" placeholder="Write your feedback..." required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
 
-<!-- Reviews List -->
-<ul class="feedback-list" id="feedbackList"></ul>
+    <!-- Reviews List -->
+    <ul class="feedback-list" id="feedbackList"></ul>
 
-
-  <div class="testimonial-card">
-    <div class="testimonial-header no-photo">
-      <div class="avatar-initial">P</div>
-      <div>
-        <h3>Priya Sharma</h3>
-        <div class="stars">★★★★★</div>
+    <div class="testimonial-card">
+      <div class="testimonial-header no-photo">
+        <div class="avatar-initial">P</div>
+        <div>
+          <h3>Priya Sharma</h3>
+          <div class="stars">★★★★★</div>
+        </div>
       </div>
+      <p class="review-text">
+        "Minimal designs but so stylish! The comfort level is unmatched.
+        Highly recommend TheGDee to everyone."
+      </p>
     </div>
-    <p class="review-text">
-      "Minimal designs but so stylish! The comfort level is unmatched.
-      Highly recommend TheGDee to everyone."
-    </p>
-  </div>
 
-  <div class="testimonial-card">
-    <div class="testimonial-header no-photo">
-      <div class="avatar-initial">A</div>
-      <div>
-        <h3>Alex Verma</h3>
-        <div class="stars">★★★★★</div>
+    <div class="testimonial-card">
+      <div class="testimonial-header no-photo">
+        <div class="avatar-initial">A</div>
+        <div>
+          <h3>Alex Verma</h3>
+          <div class="stars">★★★★★</div>
+        </div>
       </div>
+      <p class="review-text">
+        "Fast delivery, great packaging, and superb product quality.
+        Exactly what I was looking for!"
+      </p>
     </div>
-    <p class="review-text">
-      "Fast delivery, great packaging, and superb product quality.
-      Exactly what I was looking for!"
-    </p>
+
   </div>
-
-</div>
-
 
   <!-- Footer -->
   <footer class="footer">
@@ -150,220 +162,262 @@
     </div>
   </footer>
 
-   <!-- JavaScript -->
-   <script>
-   let selectedRating = 0;
+  <!-- JavaScript -->
+  <script>
+    // ----------------------------
+    // Helpers
+    // ----------------------------
+    const safeNum = (v) => {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : 0;
+    };
 
-   // User ID generator
-   if (!localStorage.getItem("userId")) {
-     localStorage.setItem(
-       "userId",
-       Date.now().toString(36) + Math.random().toString(36).substr(2)
-     );
-   }
-   let currentUserId = localStorage.getItem("userId");
+    const getFirstImageUrl = (images) => {
+      if (!images || !images.length) return "https://via.placeholder.com/600x800";
+      const first = images[0];
+      const medium = first?.formats?.medium?.url;
+      const direct = first?.url;
+      return "https://panel.thegdee.com" + (medium || direct || "");
+    };
 
-   // Render stars
-   document.getElementById("starRating").innerHTML = "★★★★★"
-     .split("")
-     .map((star, i) => `<span data-index="${i}">★</span>`)
-     .join("");
+    // ----------------------------
+    // Rating + Reviews (unchanged logic with minor safety)
+    // ----------------------------
+    let selectedRating = 0;
 
-   document.querySelectorAll("#starRating span").forEach(star => {
-     star.addEventListener("click", function () {
-       selectedRating = Number(this.dataset.index) + 1;
-       document.querySelectorAll("#starRating span").forEach((s, index) => {
-         s.classList.toggle("selected", index < selectedRating);
-       });
-     });
-   });
+    if (!localStorage.getItem("userId")) {
+      localStorage.setItem(
+        "userId",
+        Date.now().toString(36) + Math.random().toString(36).substr(2)
+      );
+    }
+    let currentUserId = localStorage.getItem("userId");
 
-   // Render feedback list
-   function renderFeedbackList() {
-     let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
-     let listHTML = "";
-     savedReviews.forEach((r, index) => {
-       listHTML += `
-         <li>
-           <div class="review-content">
-             <strong>${r.name}</strong> 
-             <span class="review-meta">${"★".repeat(r.selectedRating)}</span>
-             <div>"${r.review}"</div>
-           </div>
-           ${r.userId === currentUserId 
-             ? `<button class="delete-btn" onclick="deleteFeedback(${index})">&times;</button>`
-             : ""}
-         </li>
-       `;
-     });
-     document.getElementById("feedbackList").innerHTML = listHTML;
-   }
+    document.getElementById("starRating").innerHTML = "★★★★★"
+      .split("")
+      .map((star, i) => `<span data-index="${i}">★</span>`)
+      .join("");
 
-   // Submit review
-   document.getElementById("feedbackForm").addEventListener("submit", function (e) {
-     e.preventDefault();
-     let name = document.getElementById("name").value;
-     let review = document.getElementById("review").value;
-     if (selectedRating === 0) {
-       alert("Please select a rating");
-       return;
-     }
-     let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
-     savedReviews.push({ 
-       name, 
-       review, 
-       selectedRating, 
-       userId: currentUserId 
-     });
-     localStorage.setItem("productReviews", JSON.stringify(savedReviews));
-     this.reset();
-     selectedRating = 0;
-     document.querySelectorAll("#starRating span").forEach(s => s.classList.remove("selected"));
-     renderFeedbackList();
-   });
+    document.querySelectorAll("#starRating span").forEach(star => {
+      star.addEventListener("click", function () {
+        selectedRating = Number(this.dataset.index) + 1;
+        document.querySelectorAll("#starRating span").forEach((s, index) => {
+          s.classList.toggle("selected", index < selectedRating);
+        });
+      });
+    });
 
-   // Delete review
-   function deleteFeedback(index) {
-     let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
-     if (savedReviews[index].userId === currentUserId) {
-       savedReviews.splice(index, 1);
-       localStorage.setItem("productReviews", JSON.stringify(savedReviews));
-       renderFeedbackList();
-     } else {
-       alert("❌ You can only delete your own feedback.");
-     }
-   }
-   window.addEventListener("load", renderFeedbackList);
+    function renderFeedbackList() {
+      let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
+      let listHTML = "";
+      savedReviews.forEach((r, index) => {
+        listHTML += `
+          <li>
+            <div class="review-content">
+              <strong>${r.name}</strong> 
+              <span class="review-meta">${"★".repeat(r.selectedRating)}</span>
+              <div>"${r.review}"</div>
+            </div>
+            ${r.userId === currentUserId 
+              ? `<button class="delete-btn" onclick="deleteFeedback(${index})">&times;</button>`
+              : ""}
+          </li>
+        `;
+      });
+      document.getElementById("feedbackList").innerHTML = listHTML;
+    }
 
-   const hamburger = document.getElementById("hamburger");
-   const navLinks = document.getElementById("navLinks");
-   hamburger.addEventListener("click", () => {
-     navLinks.classList.toggle("show");
-   });
+    document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let name = document.getElementById("name").value.trim();
+      let review = document.getElementById("review").value.trim();
+      if (!name || !review) {
+        alert("Please fill your name and review.");
+        return;
+      }
+      if (selectedRating === 0) {
+        alert("Please select a rating");
+        return;
+      }
+      let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
+      savedReviews.push({ 
+        name, 
+        review, 
+        selectedRating, 
+        userId: currentUserId 
+      });
+      localStorage.setItem("productReviews", JSON.stringify(savedReviews));
+      this.reset();
+      selectedRating = 0;
+      document.querySelectorAll("#starRating span").forEach(s => s.classList.remove("selected"));
+      renderFeedbackList();
+    });
 
-   // Fetch Product Details
-   async function fetchProductDetails() {
-     try {
-       const urlParams = new URLSearchParams(window.location.search);
-       const slug = urlParams.get("slug");
-       if (!slug) throw new Error("Product slug not found in URL.");
+    function deleteFeedback(index) {
+      let savedReviews = JSON.parse(localStorage.getItem("productReviews")) || [];
+      if (savedReviews[index]?.userId === currentUserId) {
+        savedReviews.splice(index, 1);
+        localStorage.setItem("productReviews", JSON.stringify(savedReviews));
+        renderFeedbackList();
+      } else {
+        alert("❌ You can only delete your own feedback.");
+      }
+    }
+    window.addEventListener("load", renderFeedbackList);
 
-       const res = await fetch(`https://panel.thegdee.com/api/products?populate=*&filters[Slug][$eq]=${slug}`);
-       const json = await res.json();
-       const product = json.data?.[0];
-       if (!product) {
-         document.getElementById("product-details").innerHTML = "<p>❌ Product not found.</p>";
-         return;
-       }
+    // ----------------------------
+    // Navbar
+    // ----------------------------
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
 
-       const { Title, Price, Description, Image, id } = product;
-       const images = Image || [];
+    // ----------------------------
+    // Product fetch + render
+    // ----------------------------
+    async function fetchProductDetails() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get("slug");
+        if (!slug) throw new Error("Product slug not found in URL.");
 
-       // Render Images
-       let imageHTML = `
-         <div class="slider-wrapper">
-           <button class="slider-btn left">&#10094;</button>
-           <div class="product-images" id="image-slider">
-             ${images.map((img, i) => `
-               <img src="https://panel.thegdee.com${img.formats?.medium?.url || img.url}" class="slider-image" />
-             `).join("")}
-           </div>
-           <button class="slider-btn right">&#10095;</button>
-         </div>
-       `;
-       document.getElementById("product-images").innerHTML = imageHTML;
+        const res = await fetch(`https://panel.thegdee.com/api/products?populate=*&filters[Slug][$eq]=${encodeURIComponent(slug)}`);
+        const json = await res.json();
+        const product = json?.data?.[0];
+        if (!product) {
+          document.getElementById("product-details").innerHTML = "<p>❌ Product not found.</p>";
+          return;
+        }
 
- // Render Details
-document.getElementById("product-details").innerHTML = `
-  <h2>${Title}</h2>
-  <p><strong>Price: <span class="old-price">Rs 1199</span> -</strong> ₹${Price}</p>
+        const { Title, Price, Description, Image, id } = product;
+        const images = Array.isArray(Image) ? Image : (Image ? [Image] : []);
 
-  <div class="quantity-container">
-    <button class="quantity-decrease">-</button>
-    <span id="quantity">1</span>
-    <button class="quantity-increase">+</button>
-  </div>
+        // Images slider
+        const imagesHTML = `
+          <div class="slider-wrapper">
+            <button class="slider-btn left">&#10094;</button>
+            <div class="product-images" id="image-slider">
+              ${images.map((img) => {
+                const src = "https://panel.thegdee.com" + (img?.formats?.medium?.url || img?.url || "");
+                return `<img src="${src}" class="slider-image" />`;
+              }).join("")}
+            </div>
+            <button class="slider-btn right">&#10095;</button>
+          </div>
+        `;
+        document.getElementById("product-images").innerHTML = imagesHTML;
 
-  <!-- Action Buttons Wrapper -->
-  <div class="action-buttons">
-    <button class="buy-now">Buy Now</button>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+        // Details section
+        document.getElementById("product-details").innerHTML = `
+          <h2>${Title}</h2>
+          <p><strong>Price: <span class="old-price">Rs 1199</span> -</strong> ₹${Price}</p>
 
-  <!-- Size Buttons Grid -->
-  <div class="extra-buttons">
-    <button class="button">Small</button>
-    <button class="button">Medium</button>
-    <button class="button">Large</button>
-    <button class="button">Extra Large</button>
-  </div>
+          <div class="quantity-container">
+            <button type="button" class="quantity-decrease">-</button>
+            <span id="quantity">1</span>
+            <button type="button" class="quantity-increase">+</button>
+          </div>
 
+          <div class="action-buttons">
+            <button type="button" class="buy-now">Buy Now</button>
+            <button type="button" class="add-to-cart">Add to Cart</button>
+          </div>
 
+          <!-- Size Buttons Grid -->
+          <div class="extra-buttons">
+            <button type="button" class="button" data-size="S">Small</button>
+            <button type="button" class="button" data-size="M">Medium</button>
+            <button type="button" class="button" data-size="L">Large</button>
+            <button type="button" class="button" data-size="XL">Extra Large</button>
+          </div>
 
-  <!-- ✅ Product Details Heading with Description -->
-  <h3>Product Details:</h3>
-  <p>${Description}</p>
-`;
+          <h3>Product Details:</h3>
+          <p>${Description || ""}</p>
+        `;
 
-       // Quantity Logic
-       let quantity = 1;
-       const quantityDisplay = document.getElementById('quantity');
-       document.querySelector('.quantity-decrease').onclick = () => {
-         if (quantity > 1) quantityDisplay.textContent = --quantity;
-       };
-       document.querySelector('.quantity-increase').onclick = () => {
-         quantityDisplay.textContent = ++quantity;
-       };
+        // Quantity logic
+        let quantity = 1;
+        const quantityDisplay = document.getElementById('quantity');
+        document.querySelector('.quantity-decrease').onclick = () => {
+          if (quantity > 1) {
+            quantity -= 1;
+            quantityDisplay.textContent = quantity;
+          }
+        };
+        document.querySelector('.quantity-increase').onclick = () => {
+          quantity += 1;
+          quantityDisplay.textContent = quantity;
+        };
 
-       // Size Button Active
-       document.querySelectorAll('.button-container .button').forEach(btn => {
-         btn.addEventListener('click', () => {
-           document.querySelectorAll('.button-container .button').forEach(b => b.classList.remove('active'));
-           btn.classList.add('active');
-         });
-       });
+        // Size selection: correct container + default active (Medium)
+        const sizeButtons = document.querySelectorAll('.extra-buttons .button');
+        const setActive = (btn) => {
+          sizeButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        };
+        // Default select Medium (2nd button)
+        const defaultBtn = document.querySelector('.extra-buttons .button[data-size="M"]') || sizeButtons[1] || sizeButtons;
+        if (defaultBtn) setActive(defaultBtn);
 
-       // ✅ Add to Cart
-       document.querySelector('.add-to-cart').addEventListener('click', () => {
-         const selectedSize = document.querySelector('.button-container .active')?.textContent || "Medium";
-         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-         const existingItemIndex = cart.findIndex(item => item.id === id && item.size === selectedSize);
-         if (existingItemIndex !== -1) {
-           cart[existingItemIndex].quantity += quantity;
-         } else {
-           cart.push({
-             id,
-             title: Title,
-             price: Price,
-             quantity,
-             size: selectedSize,
-             image: `https://panel.thegdee.com${images[0]?.formats?.medium?.url || images?.url}`
-           });
-         }
-         localStorage.setItem('cart', JSON.stringify(cart));
-         window.location.href = "cart.html";
-       });
+        sizeButtons.forEach(btn => {
+          btn.addEventListener('click', () => setActive(btn));
+        });
 
-       // ✅ Buy Now Button Logic
-       document.querySelector('.buy-now').addEventListener('click', () => {
-         const selectedSize = document.querySelector('.button-container .active')?.textContent || "Medium";
-         const buyNowItem = {
-           id,
-           title: Title,
-           price: Price,
-           quantity,
-           size: selectedSize,
-           image: `https://panel.thegdee.com${images[0]?.formats?.medium?.url || images?.url}`
-         };
-         localStorage.setItem('buyNowItem', JSON.stringify(buyNowItem));
-         window.location.href = "cart.html"; // ✅ change to cart.html if checkout not ready
-       });
+        const getSelectedSize = () => {
+          const el = document.querySelector('.extra-buttons .button.active');
+          // fallback to "M" code, but UI text will show full label in cart if needed
+          return el?.dataset?.size || "M";
+        };
 
-     } catch (error) {
-       document.getElementById("product-details").innerHTML = `<p>Error loading product: ${error.message}</p>`;
-     }
-   }
-   window.onload = fetchProductDetails;
-   </script>
+        const getSelectedSizeLabel = () => {
+          const el = document.querySelector('.extra-buttons .button.active');
+          return (el?.textContent || "Medium").trim();
+        };
+
+        // Add to Cart
+        document.querySelector('.add-to-cart').addEventListener('click', () => {
+          const selectedSizeCode = getSelectedSize();
+          const selectedSizeLabel = getSelectedSizeLabel();
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const existingIndex = cart.findIndex(item => item.id === id && item.size === selectedSizeLabel);
+          if (existingIndex !== -1) {
+            cart[existingIndex].quantity += quantity;
+          } else {
+            cart.push({
+              id,
+              title: Title,
+              price: Price,
+              quantity,
+              size: selectedSizeLabel,
+              image: getFirstImageUrl(images)
+            });
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+          window.location.href = "cart.html";
+        });
+
+        // Buy Now
+        document.querySelector('.buy-now').addEventListener('click', () => {
+          const selectedSizeLabel = getSelectedSizeLabel();
+          const buyNowItem = {
+            id,
+            title: Title,
+            price: Price,
+            quantity,
+            size: selectedSizeLabel,
+            image: getFirstImageUrl(images)
+          };
+          localStorage.setItem('buyNowItem', JSON.stringify(buyNowItem));
+          window.location.href = "cart.html"; // or checkout.html when ready
+        });
+
+      } catch (error) {
+        document.getElementById("product-details").innerHTML = `<p>Error loading product: ${error.message}</p>`;
+      }
+    }
+    window.onload = fetchProductDetails;
+  </script>
 </body>
 </html>
