@@ -165,21 +165,24 @@ body {
   </div>
 </div>
 
-<script>
+ 
+   <script>
 const fmtINR = n => "₹"+Number(n||0).toLocaleString("en-IN");
 const addDays = (d, n) => { const dt = new Date(d); dt.setDate(dt.getDate()+n); return dt; };
 const fmtDate = d => d.toLocaleDateString("en-IN",{ day:"2-digit", month:"short", year:"numeric" });
 const randomOrderNo = () => [...Array(6)].map(()=> "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random()*32)]).join("");
 
+// Get order data
 const data = JSON.parse(localStorage.getItem("orderDetails") || "{}");
 data.orderNumber = data.orderNumber || randomOrderNo();
 
+// Basic details
 document.getElementById("ordNo").textContent = "#"+data.orderNumber;
 document.getElementById("eta").textContent = fmtDate(addDays(new Date(), 4));
 document.getElementById("cust").textContent = data.name || "-";
 document.getElementById("addr").textContent = data.address || "-";
 
-// Pills
+// Payment pill
 const paid = (String(data.paymentMethod||"").toLowerCase() !== "cod");
 document.getElementById("meta-bar").innerHTML =
   `<div class="pill success"><i class="fas fa-money-check"></i> ${paid?"Payment received":"Cash on Delivery"}</div>`;
@@ -196,18 +199,20 @@ const itemsEl = document.getElementById("items");
 });
 
 // Totals
-document.getElementById("subt").textContent = fmtINR(data.subtotal||data.totalAmount||0);
-document.getElementById("ship").textContent = fmtINR(data.deliveryCharge||0);
-if(data.discount>0){ 
-  document.getElementById("discRow").style.display="flex";
-  document.getElementById("disc").textContent = "-"+fmtINR(data.discount);
-}
-document.getElementById("grand").textContent = fmtINR(data.totalAmount||0);
+const subtotal = data.subtotal || 0;
+const delivery = (data.paymentMethod === "cod") ? 100 : 0;  // ✅ Logic fix
+const grandTotal = subtotal + delivery;
+
+document.getElementById("subt").textContent = fmtINR(subtotal);
+document.getElementById("ship").textContent = (delivery>0 ? fmtINR(delivery) : "Free");
+document.getElementById("grand").textContent = fmtINR(grandTotal);
 
 // Actions
 document.getElementById("trackBtn").onclick=()=>alert("Tracking details will be sent once order is shipped.");
 document.getElementById("downloadBtn").onclick=()=>alert("Invoice download coming soon.");
 document.getElementById("printBtn").onclick=()=>window.print();
 </script>
+
+
 </body>
 </html>

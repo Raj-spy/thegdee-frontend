@@ -72,213 +72,220 @@ src="https://www.facebook.com/tr?id=605958209231658&ev=PageView&noscript=1"
       <div class="total-price" id="final-total"></div>
     </div>
   </div>
-  <script>
-    const cartContainer = document.getElementById("cart-items");
-   const finalTotalElement = document.getElementById("final-total");
-   const loader = document.getElementById("loader");
-   const submitBtn = document.getElementById("submit-btn");
-   const paymentRadios = document.querySelectorAll('input[name="payment"]');
-   
-   let cartItems = [];
-   try {
-     cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-   } catch (error) {
-     console.error("Invalid cart JSON:", error);
-     localStorage.removeItem("cart");
-   }
-   
-   let baseTotal = 0;
-   let deliveryCharge = 0;
-   let finalTotal = 0;
-   
-   function updateCartDisplay() {
-     cartContainer.innerHTML = "";
-     baseTotal = 0;
-   
-     if (!cartItems.length) {
-       cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-       finalTotalElement.innerHTML = "";
-       return;
-     }
-   
-     cartItems.forEach(item => {
-       const itemTotal = item.price * item.quantity;
-       baseTotal += itemTotal;
-   
-       const div = document.createElement("div");
-       div.className = "cart-item";
-       div.innerHTML = `
-         <img src="${item.image}" alt="${item.title}" />
-         <div>
-           <h4>${item.title}</h4>
-           <p>Size: ${item.size}</p>
-           <p>Quantity: ${item.quantity}</p>
-           <p>Price: ₹${item.price} x ${item.quantity} = ₹${itemTotal}</p>
-         </div>
-       `;
-       cartContainer.appendChild(div);
-     });
-   
-     updateTotal();
-   }
-   
-   function updateTotal() {
-     const selectedPayment = document.querySelector('input[name="payment"]:checked');
-     deliveryCharge = (selectedPayment?.value === "cod") ? 100 : 0;
-     finalTotal = baseTotal + deliveryCharge;
-   
-     finalTotalElement.innerHTML = `
-       <p>Subtotal: ₹${baseTotal}</p>
-       <p>Delivery: ₹${deliveryCharge}</p>
-       <strong>Total Amount: ₹${finalTotal}</strong>
-     `;
-   }
-   
-   paymentRadios.forEach(radio => {
-     radio.addEventListener("change", updateTotal);
-   });
-   
-   function validatePhoneNumber(phone) {
-     return /^[6-9]\d{9}$/.test(phone);
-   }
-   
-   async function submitCheckout() {
-     const userName = document.getElementById("user-name").value.trim();
-     const userAddress = document.getElementById("user-address").value.trim();
-     const userPhone = document.getElementById("user-phone").value.trim();
-     const selectedPayment = document.querySelector('input[name="payment"]:checked');
-   
-     if (!userName || !userAddress || !userPhone) {
-       alert("Please fill in all the details.");
-       return;
-     }
-   
-     if (!validatePhoneNumber(userPhone)) {
-       alert("Please enter a valid 10-digit phone number.");
-       return;
-     }
-   
-     if (!cartItems.length) {
-       alert("Your cart is empty.");
-       return;
-     }
-   
-     loader.style.display = "block";
-     submitBtn.disabled = true;
-   
-     const orderData = {
-       name: userName,
-       address: userAddress,
-       phoneNumber: userPhone,
-       paymentMethod: selectedPayment.value,
-       orderstatus: "pending",
-       totalAmount: finalTotal,
-       products: cartItems.map(item => ({
-         title: item.title,
-         price: item.price,
-         image: item.image,
-         quantity: item.quantity,
-         size: item.size,
-       }))
-     };
-   
-     localStorage.setItem("orderDetails", JSON.stringify(orderData));
-   
-     if (selectedPayment.value === "online") {
-       // Razorpay payment integration
-       const options = {
-         key: "rzp_live_WWyP2tXTKoNhnA", // Your Razorpay Key ID
-         amount: finalTotal * 100, // Amount in paise (multiply by 100)
-         currency: "INR",
-         name: "Thegdeeclothing",
-         description: "Order Payment",
-         image: "https://i.postimg.cc/yYnX81Sh/thegdee-logo-without-bg.png", // Your company logo URL
-         handler: async function (paymentResponse) {
-           console.log("Payment successful:", paymentResponse);
-   
-           const orderData = {
-             name: userName,
-             address: userAddress,
-             phoneNumber: userPhone,
-             paymentMethod: selectedPayment.value,
-             orderstatus: "pending",
-             totalAmount: finalTotal,
-             razorpayPaymentId: paymentResponse.razorpay_payment_id, // Use paymentResponse here
-             products: cartItems.map(item => ({
-               title: item.title,
-               price: item.price,
-               image: item.image,
-               quantity: item.quantity,
-               size: item.size,
-             }))
-           };
-   
-           try {
-             const res = await fetch("https://panel.thegdee.com/api/orders", { // Updated URL
-               method: "POST",
-               headers: { "Content-Type": "application/json" },
-               body: JSON.stringify({ data: orderData })
-             });
-             const result = await res.json();
-             if (res.ok) {
-               alert("✅ Order placed successfully!");
-               localStorage.removeItem("cart");
-               window.location.href = "confirmation.html"; // Redirect to confirmation page
-             } else {
-               console.error("Error sending order to Strapi:", result.error);
-               alert("❌ Failed to place order.");
-             }
-           } catch (err) {
-             console.error("Request failed:", err);
-             alert("An error occurred.");
-           }
-         },
-         prefill: {
-           name: userName,
-           email: "user@example.com", // Optionally, get the user's email
-           contact: userPhone
-         },
-         theme: {
-           color: "#F37254" // Customize the theme color of the payment window
-         }
-       };
-   
-       const rzp = new Razorpay(options);
-       rzp.open();
-     } else {
-       // COD (Cash on Delivery) handling
-       try {
-         const response = await fetch("https://panel.thegdee.com/api/orders", { // Updated URL
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify({ data: orderData })
-         });
-   
-         const result = await response.json();
-         loader.style.display = "none";
-         submitBtn.disabled = false;
-   
-         if (response.ok) {
-           localStorage.removeItem("cart");
-           alert("✅ Order placed successfully!");
-           window.location.href = "confirmation.html";
-         } else {
-           console.error("Order error:", result);
-           alert("❌ Failed to place order.");
-         }
-       } catch (err) {
-         console.error("Request failed:", err);
-         loader.style.display = "none";
-         submitBtn.disabled = false;
-         alert("An error occurred.");
-       }
-     }
-   }
-   
-   // Initial load
-   updateCartDisplay();
-   
-   </script>
+ <script>
+const cartContainer = document.getElementById("cart-items");
+const finalTotalElement = document.getElementById("final-total");
+const loader = document.getElementById("loader");
+const submitBtn = document.getElementById("submit-btn");
+const paymentRadios = document.querySelectorAll('input[name="payment"]');
+
+let cartItems = [];
+try {
+  cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+} catch (error) {
+  console.error("Invalid cart JSON:", error);
+  localStorage.removeItem("cart");
+}
+
+let baseTotal = 0;
+let deliveryCharge = 0;
+let finalTotal = 0;
+
+function updateCartDisplay() {
+  cartContainer.innerHTML = "";
+  baseTotal = 0;
+
+  if (!cartItems.length) {
+    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+    finalTotalElement.innerHTML = "";
+    return;
+  }
+
+  cartItems.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    baseTotal += itemTotal;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.title}" />
+      <div>
+        <h4>${item.title}</h4>
+        <p>Size: ${item.size}</p>
+        <p>Quantity: ${item.quantity}</p>
+        <p>Price: ₹${item.price} x ${item.quantity} = ₹${itemTotal}</p>
+      </div>
+    `;
+    cartContainer.appendChild(div);
+  });
+
+  updateTotal();
+}
+
+function updateTotal() {
+  const selectedPayment = document.querySelector('input[name="payment"]:checked');
+  deliveryCharge = (selectedPayment?.value === "cod") ? 100 : 0;
+  finalTotal = baseTotal + deliveryCharge;
+
+  finalTotalElement.innerHTML = `
+    <p>Subtotal: ₹${baseTotal}</p>
+    <p>Delivery: ${deliveryCharge === 0 ? "Free" : "₹" + deliveryCharge}</p>
+    <strong>Total Amount: ₹${finalTotal}</strong>
+  `;
+}
+
+paymentRadios.forEach(radio => {
+  radio.addEventListener("change", updateTotal);
+});
+
+function validatePhoneNumber(phone) {
+  return /^[6-9]\d{9}$/.test(phone);
+}
+
+async function submitCheckout() {
+  const userName = document.getElementById("user-name").value.trim();
+  const userAddress = document.getElementById("user-address").value.trim();
+  const userPhone = document.getElementById("user-phone").value.trim();
+  const selectedPayment = document.querySelector('input[name="payment"]:checked');
+
+  if (!userName || !userAddress || !userPhone) {
+    alert("Please fill in all the details.");
+    return;
+  }
+
+  if (!validatePhoneNumber(userPhone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return;
+  }
+
+  if (!cartItems.length) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  loader.style.display = "block";
+  submitBtn.disabled = true;
+
+  // ✅ Local data (for confirmation page)
+  const localOrderData = {
+    name: userName,
+    address: userAddress,
+    phoneNumber: userPhone,
+    paymentMethod: selectedPayment.value,
+    orderstatus: "pending",
+    subtotal: baseTotal,            // only for local storage
+    deliveryCharge: deliveryCharge, // only for local storage
+    totalAmount: finalTotal,
+    products: cartItems.map(item => ({
+      title: item.title,
+      price: item.price,
+      image: item.image,
+      quantity: item.quantity,
+      size: item.size,
+    }))
+  };
+
+  // ✅ API data (server does not accept subtotal/deliveryCharge)
+  const apiOrderData = {
+    name: userName,
+    address: userAddress,
+    phoneNumber: userPhone,
+    paymentMethod: selectedPayment.value,
+    orderstatus: "pending",
+    totalAmount: finalTotal,
+    products: cartItems.map(item => ({
+      title: item.title,
+      price: item.price,
+      image: item.image,
+      quantity: item.quantity,
+      size: item.size,
+    }))
+  };
+
+  // Save locally for confirmation.js
+  localStorage.setItem("orderDetails", JSON.stringify(localOrderData));
+
+  if (selectedPayment.value === "online") {
+    // Razorpay
+    const options = {
+      key: "rzp_live_WWyP2tXTKoNhnA",
+      amount: finalTotal * 100,
+      currency: "INR",
+      name: "Thegdeeclothing",
+      description: "Order Payment",
+      image: "https://i.postimg.cc/yYnX81Sh/thegdee-logo-without-bg.png",
+      handler: async function (paymentResponse) {
+        console.log("Payment successful:", paymentResponse);
+
+        const paidOrderData = {
+          ...apiOrderData,
+          razorpayPaymentId: paymentResponse.razorpay_payment_id
+        };
+
+        try {
+          const res = await fetch("https://panel.thegdee.com/api/orders", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: paidOrderData })
+          });
+          const result = await res.json();
+          if (res.ok) {
+            alert("✅ Order placed successfully!");
+            localStorage.removeItem("cart");
+            window.location.href = "confirmation.html";
+          } else {
+            console.error("Error sending order to Strapi:", result.error);
+            alert("❌ Failed to place order.");
+          }
+        } catch (err) {
+          console.error("Request failed:", err);
+          alert("An error occurred.");
+        }
+      },
+      prefill: {
+        name: userName,
+        email: "user@example.com",
+        contact: userPhone
+      },
+      theme: { color: "#F37254" }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } else {
+    // COD
+    try {
+      const response = await fetch("https://panel.thegdee.com/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: apiOrderData })
+      });
+
+      const result = await response.json();
+      loader.style.display = "none";
+      submitBtn.disabled = false;
+
+      if (response.ok) {
+        localStorage.removeItem("cart");
+        alert("✅ Order placed successfully!");
+        window.location.href = "confirmation.html";
+      } else {
+        console.error("Order error:", result);
+        alert("❌ Failed to place order.");
+      }
+    } catch (err) {
+      console.error("Request failed:", err);
+      loader.style.display = "none";
+      submitBtn.disabled = false;
+      alert("An error occurred.");
+    }
+  }
+}
+
+// Initial load
+updateCartDisplay();
+</script>
+
    
 </body>
 </html>
